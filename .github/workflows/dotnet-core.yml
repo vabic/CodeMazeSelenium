@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore ./EmployeesApp/EmployeesApp.sln
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
       - name: Publish
         run: |
           dotnet publish -c Release -o dotnetcoreselenium
