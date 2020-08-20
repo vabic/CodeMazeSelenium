@@ -1,34 +1,35 @@
-﻿using EmployeesApp.UITests;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+
+using EmployeesApp.UITests;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using Xunit;
 
-namespace EmployeesApp.AutomatedUITests
-{
-    public class AutomatedUITests : IDisposable
-    {
+namespace EmployeesApp.AutomatedUITests {
+    public class AutomatedUITests : IDisposable {
         private readonly IWebDriver _driver;
         private readonly EmployeePage _page;
-        public AutomatedUITests()
-        {
-            _driver = new ChromeDriver();
+        public AutomatedUITests() {
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArgument("--allow-insecure-localhost ");
+            _driver = new ChromeDriver(chromeOptions);
             _page = new EmployeePage(_driver);
             _page.Navigate();
         }
 
         [Fact]
-        public void Create_WhenExecuted_ReturnsCreateView()
-        {
+        public void Create_WhenExecuted_ReturnsCreateView() {
             Assert.Equal("Create - EmployeesApp", _page.Title);
             Assert.Contains("Please provide a new employee data", _page.Source);
         }
 
         [Fact]
-        public void Create_WrongModelData_ReturnsErrorMessage()
-        {
+        public void Create_WrongModelData_ReturnsErrorMessage() {
             _page.PopulateName("New Name");
             _page.PopulateAge("34");
             _page.ClickCreate();
@@ -37,8 +38,7 @@ namespace EmployeesApp.AutomatedUITests
         }
 
         [Fact]
-        public void Create_WhenSuccessfullyExecuted_ReturnsIndexViewWithNewEmployee()
-        {
+        public void Create_WhenSuccessfullyExecuted_ReturnsIndexViewWithNewEmployee() {
             _page.PopulateName("New Name");
             _page.PopulateAge("34");
             _page.PopulateAccountNumber("123-9384613085-58");
@@ -50,8 +50,7 @@ namespace EmployeesApp.AutomatedUITests
             Assert.Contains("123-9384613085-58", _page.Source);
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             _driver.Quit();
             _driver.Dispose();
         }
