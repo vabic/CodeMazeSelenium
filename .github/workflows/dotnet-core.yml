@@ -2,36 +2,35 @@ name: .NET Core
 
 on:
   push:
-    branches: [ ui-testing-selenium ]
+    branches: [ui-testing-selenium]
   pull_request:
-    branches: [ ui-testing-selenium ]
+    branches: [ui-testing-selenium]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-    - name: Display the path
-      run: |
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+      - name: Display the path
+        run: |
           import os
           print(os.environ['PATH'])
-      shell: python
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Publish
-      run: |
-        dotnet publish -c Release -o dotnetcoreselenium
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
-    - uses: actions/upload-artifact@v2
-      with:
-        name: EmployeesApp
-        path: /home/runner/work/CodeMazeSelenium/CodeMAzeSelenium/DataLoopCoreModel/Release/bin/DataLoopCoreModel
+        shell: python
+      - name: Install dependencies
+        run: dotnet restore EmployeesApp/EmpolyeesApp.sln
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Publish
+        run: |
+          dotnet publish -c Release -o dotnetcoreselenium
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+      - uses: actions/upload-artifact@v2
+        with:
+          name: EmployeesApp
+          path: /home/runner/work/CodeMazeSelenium/CodeMAzeSelenium/DataLoopCoreModel/Release/bin/DataLoopCoreModel
