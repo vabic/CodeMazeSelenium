@@ -32,8 +32,11 @@ jobs:
         
       - name: Publish
         run: |
-          dotnet publish -c Release -o dotnetcoreselenium
-          
+          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+      
+      - name: Compress output
+        run: tar -zcvf output.tar.gz ./output
+        
       - name: Test
         run: dotnet test --no-restore --verbosity normal
         
