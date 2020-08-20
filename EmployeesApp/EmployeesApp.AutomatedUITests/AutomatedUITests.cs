@@ -17,6 +17,9 @@ namespace EmployeesApp.AutomatedUITests {
         public AutomatedUITests() {
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--allow-insecure-localhost ");
+            chromeOptions.AddArgument("--no-sandbox");
+            chromeOptions.AddArgument("--disable-dev-shm-usage");
+            chromeOptions.AddArgument("--headless");
             _driver = new ChromeDriver(chromeOptions);
             _page = new EmployeePage(_driver);
             _page.Navigate();
