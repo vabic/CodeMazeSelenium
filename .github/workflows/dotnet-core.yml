@@ -44,8 +44,8 @@ jobs:
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
         
       - name: Start Server
+        working-directory: ./output
         run: |
-          working-directory: ./output
           nohup  ./EmployeesApp &
           
       - name: Selenium Tests
