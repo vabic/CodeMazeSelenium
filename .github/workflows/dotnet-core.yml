@@ -12,24 +12,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
+          
       - name: Display the path
         run: |
           import os
           print(os.environ['PATH'])
         shell: python
+        
       - name: Install dependencies
         run: dotnet restore ./EmployeesApp/EmployeesApp.sln
+        
       - name: Build
         run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+        
       - name: Publish
         run: |
           dotnet publish -c Release -o dotnetcoreselenium
+          
       - name: Test
         run: dotnet test --no-restore --verbosity normal
+        
       - uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
