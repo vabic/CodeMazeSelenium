@@ -46,4 +46,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
-          path: /home/runner/work/CodeMazeSelenium/CodeMAzeSelenium/DataLoopCoreModel/Release/bin/DataLoopCoreModel
+          path: output.tar.gz
