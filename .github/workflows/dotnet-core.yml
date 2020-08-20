@@ -12,47 +12,46 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
-          
+
       - name: Display the path
         run: |
           import os
           print(os.environ['PATH'])
         shell: python
-        
+
       - name: Install dependencies
         run: dotnet restore ./EmployeesApp/EmployeesApp.sln
-        
+
       - name: Build
         run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
-        
+
       - name: Publish
         run: |
           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
-      
+
       - name: Compress output
         run: tar -zcvf output.tar.gz ./output
-        
+
       - name: Unit Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-      
+
       - name: Integrations Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
-        
+
       - name: Start Server
         working-directory: ./output
         run: |
-          nohup  ./EmployeesApp &
-          dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
-          
+          nohup ./EmployeesApp &
+
       - name: Selenium Tests
         run: |
           dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
-        
+
       - uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
