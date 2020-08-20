@@ -43,6 +43,15 @@ jobs:
       - name: Integrations Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
         
+      - name: Start Server
+        run: |
+          working-directory: ./output
+          nohup  ./EmployeesApp &
+          
+      - name: Selenium Tests
+        run: |
+          dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
+        
       - uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
