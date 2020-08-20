@@ -22,7 +22,7 @@ jobs:
           print(os.environ['PATH'])
         shell: python
       - name: Install dependencies
-        run: dotnet restore EmployeesApp/EmpolyeesApp.sln
+        run: dotnet restore /home/runner/work/CodeMazeSelenium/CodeMazeSelenium/EmployeesApp/EmpolyeesApp.sln
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Publish
