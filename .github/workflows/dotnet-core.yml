@@ -22,7 +22,7 @@ jobs:
           print(os.environ['PATH'])
         shell: python
       - name: Install dependencies
-        run: dotnet restore **/EmpolyeesApp.sln
+        run: dotnet restore ./EmployeesApp/EmployeesApp.sln
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Publish
