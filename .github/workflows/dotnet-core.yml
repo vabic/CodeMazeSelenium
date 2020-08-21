@@ -8,8 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
 
@@ -42,6 +41,12 @@ jobs:
 
       - name: Integrations Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+
+      - name: Setup MSSql
+        run: |
+          chmod +x ./setupDB.sh
+          ./setupDB.sh
+        shell: bash
 
       - name: Start Server And Run Test
         working-directory: ./output
