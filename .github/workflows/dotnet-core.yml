@@ -43,15 +43,15 @@ jobs:
       - name: Integrations Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
-      - name: Start Server
-        working-directory: ./output
-        run: |
-          (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
-        shell: bash
+#       - name: Start Server
+#         working-directory: ./output
+#         run: |
+#           (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
+#         shell: bash
 
-      - name: Selenium Tests
-        run: |
-          dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
+#       - name: Selenium Tests
+#         run: |
+#           dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - uses: actions/upload-artifact@v2
         with:
