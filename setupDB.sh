@@ -41,18 +41,18 @@ sqlcmd -S localhost -U SA -P 'P@ssw0rd!' -Q 'select @@VERSION'
 sudo systemctl restart mssql-server
 sleep 5
 
-echo -e  "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-echo -e  "build dotnet \n"
-dotnet build ./EmployeesApp/EmployeesApp.sln
-sleep 5
+# echo -e  "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+# echo -e  "build dotnet \n"
+# dotnet build ./EmployeesApp/EmployeesApp.sln
+# sleep 5
 
-echo -e  "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-echo -e  "publish dotnet \n"
-sudo rm -rf ./sol/
-dotnet publish -c Release -o sol EmployeesApp/EmployeesApp.sln
+# echo -e  "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+# echo -e  "publish dotnet \n"
+# sudo rm -rf ./sol/
+# dotnet publish -c Release -o sol EmployeesApp/EmployeesApp.sln
 
-sleep 5
-echo -e  "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-echo -e  "run test \n"
-cd sol
-(./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
+# sleep 5
+# echo -e  "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+# echo -e  "run test \n"
+# cd sol
+# (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
