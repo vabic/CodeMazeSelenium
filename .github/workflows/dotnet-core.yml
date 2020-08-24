@@ -10,7 +10,7 @@ jobs:
   setupMSSql:
     runs-on: ubuntu-18.04
     steps:
-      - name: Setup MSSql
+    - name: Setup MSSql
       run: |
         chmod +x ./setupDB.sh
         ./setupDB.sh
@@ -20,7 +20,7 @@ jobs:
     needs: [build, tests, setupMSSql]
     runs-on: ubuntu-18-04
     steps:
-      - name: Start Server And Run Test
+    - name: Start Server And Run Test
       working-directory: ./output
       run: |
         (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
@@ -30,19 +30,19 @@ jobs:
     needs: build
     runs-on: ubuntu-18-04
     steps:
-      - name: Unit Test
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+    - name: Unit Test
+      run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
 
-      - name: Integrations Test
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+    - name: Integrations Test
+      run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   publish:
     needs: e2etest
     runs-on: ubuntu-18-04
     steps:
-      - name: Compress output
-        run: tar -zcvf output.tar.gz ./output
-      - uses: actions/upload-artifact@v2
+    - name: Compress output
+      run: tar -zcvf output.tar.gz ./output
+      uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
           path: output.tar.gz
@@ -50,28 +50,28 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.301
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
 
-      - name: Display the path
-        run: |
-          import os
-          print(os.environ['PATH'])
-        shell: python
+    - name: Display the path
+      run: |
+        import os
+        print(os.environ['PATH'])
+      shell: python
 
-      - name: Install dependencies
-        run: dotnet restore ./EmployeesApp/EmployeesApp.sln
+    - name: Install dependencies
+      run: dotnet restore ./EmployeesApp/EmployeesApp.sln
 
-      - name: Build
-        run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+    - name: Build
+      run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
 
-      - name: Publish
-        run: |
-          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
+    - name: Publish
+      run: |
+        dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
 
       # - name: Compress output
       #   run: tar -zcvf output.tar.gz ./output
