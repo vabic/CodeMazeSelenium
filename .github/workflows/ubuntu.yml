@@ -48,10 +48,10 @@ jobs:
       - name: Download Output folder
         uses: actions/download-artifact@v1
         with:
-          name: Temp
+          name: temp
 
-      - name: untar Temp
-        run: tar -xvf  Temp
+      - name: untar temp
+        run: tar -xvf  temp
 
       - name: check
         run: |
@@ -79,10 +79,10 @@ jobs:
         run: echo "Hello World!!!!!!!!!!!!!!!!!!!!!"
 
       - name: Unit Test
-        working-directory: ./Temp/
+        working-directory: ./temp/
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
       - name: Integrations Test
-        working-directory: ./Temp/
+        working-directory: ./temp/
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   # upload_artefact:
@@ -114,6 +114,11 @@ jobs:
       - name: Build
         run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
 
+      - name: Unit Test
+        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+      - name: Integrations Test
+        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+
       - name: Publish
         run: |
           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
@@ -126,13 +131,6 @@ jobs:
         with:
           name: temp
           path: output.tar.gz
-        # - name: Compress output
-        #   run: tar -zcvf output.tar.gz ./output
-      # - name: Unit Test
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-      # - name: Integrations Test
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
-      # - name: Setup MSSql
       #   run: |
       #     chmod +x ./setupDB.sh
       #     ./setupDB.sh
