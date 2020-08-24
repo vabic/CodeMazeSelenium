@@ -44,13 +44,17 @@ jobs:
     needs: build
     runs-on: ubuntu-18.04
     steps:
-      - name: Download Output folder
-        uses: actions/download-artifact@v1
-        with:
-          name: app
+      # - name: Download Output folder
+      #   uses: actions/download-artifact@v1
+      #   with:
+      #     name: app
 
-      - name: untar ./app/app
-        run: tar -xvf app
+      # - name: untar ./app/app
+      #   run: tar -xvf app
+      - name: list folder
+        run: ls -al
+      - name: list folder2
+        run: ls -al ${GITHUB_WORKSPACE}
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
