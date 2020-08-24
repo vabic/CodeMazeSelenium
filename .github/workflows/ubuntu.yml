@@ -44,25 +44,22 @@ jobs:
     needs: build
     runs-on: ubuntu-18.04
     steps:
-      # - name: Download Output folder
-      #   uses: actions/download-artifact@v1
-      #   with:
-      #     name: app
+      - name: Download Output folder
+        uses: actions/download-artifact@v2
+        with:
+          name: app
 
-      # - name: untar ./app/app
-      #   run: tar -xvf app
+      - name: Display structure of downloaded files
+        run: ls -alR
+
+      - name: untar app
+        run: tar -xvf app
       - name: list folder
-        run: ls -al
-      - name: list folder2
-        run: ls -al ${GITHUB_WORKSPACE}
-
+        run: ls -alR
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
-
-      - name: Hello
-        run: echo "Hello World!!!!!!!!!!!!!!!!!!!!!"
 
       - name: Unit Test
         working-directory: ./app/output
@@ -71,24 +68,10 @@ jobs:
         working-directory: ./app/output
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
-  # upload_artefact:
-  #   needs: [e2etest]
-  #   runs-on: ubuntu-18-04
-  #   steps:
-  #     - name: Compress output
-  #       run: tar -zcvf output.tar.gz ./output
-
-  #     - name: uploading...
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: temp
-  #         path: output.tar.gz
-
   build:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
