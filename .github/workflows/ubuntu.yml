@@ -22,12 +22,12 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Download Output folder
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: app
 
       - name: untar app
-        run: tar -xvf output.tar.gz
+        run: run: tar -xvf output.tar.gz
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -35,7 +35,7 @@ jobs:
           dotnet-version: 3.1.301
 
       - name: Start Server And Run Test
-        working-directory: ${GITHUB_WORKSPACE}/output
+        working-directory: ./output
         run: |
           (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
         shell: bash
@@ -66,15 +66,12 @@ jobs:
       - name: working folder tests
         working-directory: ./output
         run: ls -alR
-      - name: working folder tests2
-        working-directory: ${GITHUB_WORKSPACE}/output
-        run: ls -alR
 
       - name: Unit Test
-        working-directory: ${GITHUB_WORKSPACE}/output
+        working-directory: ./output
         run: dotnet vstest EmployeesApp.Tests.dll
       - name: Integrations Test
-        working-directory: ${GITHUB_WORKSPACE}/output
+        working-directory: ./output
         run: dotnet vstest EmployeesApp.IntegrationTests.dll
 
   build:
