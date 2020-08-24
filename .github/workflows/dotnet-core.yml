@@ -10,6 +10,8 @@ jobs:
   setupMSSql:
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v2
+
       - name: Setup MSSql
         run: |
           chmod +x ./setupDB.sh
@@ -27,7 +29,7 @@ jobs:
         shell: bash
 
   tests:
-    needs: build
+    needs: [build]
     runs-on: ubuntu-18-04
     steps:
       - name: Unit Test
@@ -37,7 +39,7 @@ jobs:
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   publish:
-    needs: e2etest
+    needs: [e2etest]
     runs-on: ubuntu-18-04
     steps:
       - name: Compress output
