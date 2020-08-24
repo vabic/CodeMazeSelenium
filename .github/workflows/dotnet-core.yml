@@ -42,7 +42,7 @@ jobs:
         shell: bash
 
   tests:
-    needs: [build]
+    needs: build
     runs-on: ubuntu-18-04
     steps:
       - name: Download Output folder
