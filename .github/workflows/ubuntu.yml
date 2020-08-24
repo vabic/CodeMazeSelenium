@@ -25,10 +25,10 @@ jobs:
       - name: Download Output folder
         uses: actions/download-artifact@v1
         with:
-          name: temp
+          name: app
 
-      - name: untar temp
-        run: tar -xvf  temp
+      - name: untar app
+        run: tar -xvf  app
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -45,32 +45,13 @@ jobs:
     needs: build
     runs-on: ubuntu-18.04
     steps:
-      - name: list
-        run: |
-          pwd
-          ls -al
       - name: Download Output folder
         uses: actions/download-artifact@v1
         with:
-          name: temp
+          name: app
 
-      - name: untar temp
-        run: tar -xvf  temp
-      - name: list2
-        run: |
-          pwd
-          ls -al
-      - name: start time
-        run: |
-          date
-
-      - name: sleep
-        run: |
-          sleep 8
-
-      - name: end time
-        run: |
-          date
+      - name: untar app
+        run: tar -xvf app
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -81,10 +62,10 @@ jobs:
         run: echo "Hello World!!!!!!!!!!!!!!!!!!!!!"
 
       - name: Unit Test
-        working-directory: ./output/
+        working-directory: ./output
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
       - name: Integrations Test
-        working-directory: ./output/
+        working-directory: ./output
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   # upload_artefact:
@@ -131,7 +112,7 @@ jobs:
       - name: uploading...
         uses: actions/upload-artifact@v2
         with:
-          name: temp
+          name: app
           path: output.tar.gz
       #   run: |
       #     chmod +x ./setupDB.sh
