@@ -42,7 +42,7 @@ jobs:
     steps:
     - name: Compress output
       run: tar -zcvf output.tar.gz ./output
-      uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
           path: output.tar.gz
