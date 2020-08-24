@@ -52,18 +52,27 @@ jobs:
         with:
           name: app
 
+      - name: after downloaded files
+        run: ls -alR ${GITHUB_WORKSPACE}
+
       - name: untar app
         run: tar -xvf output.tar.gz
-
+      - name: after untar list folder
+        run: ls -alR ${GITHUB_WORKSPACE}
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
+      - name: working folder tests
+        working-directory: ./output
+        run: ls -alR
+      - name: working folder tests2
+        working-directory: ${GITHUB_WORKSPACE}/output
+        run: ls -alR
 
       - name: Unit Test
         working-directory: ${GITHUB_WORKSPACE}/output
         run: dotnet vstest EmployeesApp.Tests.dll
-
       - name: Integrations Test
         working-directory: ${GITHUB_WORKSPACE}/output
         run: dotnet vstest EmployeesApp.IntegrationTests.dll
