@@ -22,6 +22,16 @@ jobs:
     needs: [build, tests, setupMSSql]
     runs-on: ubuntu-18-04
     steps:
+      - name: Download Output folder
+        uses: actions/download-artifact@v1
+        with:
+          name: output/
+      
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+
       - name: Start Server And Run Test
         working-directory: ./output
         run: |
@@ -32,20 +42,30 @@ jobs:
     needs: [build]
     runs-on: ubuntu-18-04
     steps:
+      - name: Download Output folder
+        uses: actions/download-artifact@v1
+        with:
+          name: output/
+      
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+
       - name: Unit Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
 
       - name: Integrations Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
-  publish:
+  upload_artefact:
     needs: [e2etest]
     runs-on: ubuntu-18-04
     steps:
       - name: Compress output
         run: tar -zcvf output.tar.gz ./output
 
-      - name: publishing...
+      - name: uploading...
         uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
@@ -61,12 +81,6 @@ jobs:
         with:
           dotnet-version: 3.1.301
 
-      - name: Display the path
-        run: |
-          import os
-          print(os.environ['PATH'])
-        shell: python
-
       - name: Install dependencies
         run: dotnet restore ./EmployeesApp/EmployeesApp.sln
 
@@ -76,28 +90,28 @@ jobs:
       - name: Publish
         run: |
           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
+
+      - name: Upload published output
+        uses: actions/upload-artifact@v2
+        with:
+          name: EmployeesApp
+          path: ./output/
         # - name: Compress output
         #   run: tar -zcvf output.tar.gz ./output
-
-        # - name: Unit Test
-        #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-
-        # - name: Integrations Test
-        #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
-
-        # - name: Setup MSSql
-        #   run: |
-        #     chmod +x ./setupDB.sh
-        #     ./setupDB.sh
-        #   shell: bash
-
-        # - name: Start Server And Run Test
-        #   working-directory: ./output
-        #   run: |
-        #     (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
-        #   shell: bash
-
-
+      # - name: Unit Test
+      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+      # - name: Integrations Test
+      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+      # - name: Setup MSSql
+      #   run: |
+      #     chmod +x ./setupDB.sh
+      #     ./setupDB.sh
+      #   shell: bash
+      # - name: Start Server And Run Test
+      #   working-directory: ./output
+      #   run: |
+      #     (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
+      #   shell: bash
 #       - name: Selenium Tests
 #         run: |
 #           dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
