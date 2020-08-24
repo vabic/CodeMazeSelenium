@@ -44,16 +44,19 @@ jobs:
     needs: build
     runs-on: ubuntu-18.04
     steps:
+      - name: before downloaded files
+        run: ls -alR ${GITHUB_WORKSPACE}
+
       - name: Download Output folder
         uses: actions/download-artifact@v2
         with:
           name: app
 
-      - name: Display structure of downloaded files
+      - name: after downloaded files
         run: ls -alR ${GITHUB_WORKSPACE}
 
       - name: untar app
-        run: tar -xvf ${GITHUB_WORKSPACE}/app
+        run: tar -xvf output.tar.gz
       - name: list folder
         run: ls -alR ${GITHUB_WORKSPACE}
       - name: Setup .NET Core
