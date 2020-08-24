@@ -58,13 +58,12 @@ jobs:
         with:
           dotnet-version: 3.1.301
 
-      - name: Unit Test
-        working-directory: ./Temp/
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-
-      - name: Integrations Test
-        working-directory: ./Temp/
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+      # - name: Unit Test
+      #   working-directory: ./Temp/
+      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+      # - name: Integrations Test
+      #   working-directory: ./Temp/
+      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   # upload_artefact:
   #   needs: [e2etest]
