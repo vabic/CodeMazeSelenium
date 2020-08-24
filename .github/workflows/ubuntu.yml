@@ -26,8 +26,8 @@ jobs:
         with:
           name: app
 
-      - name: untar ./app/app
-        run: tar -xvf  app
+      - name: untar app
+        run: tar -xvf output.tar.gz
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -35,7 +35,7 @@ jobs:
           dotnet-version: 3.1.301
 
       - name: Start Server And Run Test
-        working-directory: ./app/output
+        working-directory: ${GITHUB_WORKSPACE}/output
         run: |
           (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
         shell: bash
@@ -52,13 +52,9 @@ jobs:
         with:
           name: app
 
-      - name: after downloaded files
-        run: ls -alR ${GITHUB_WORKSPACE}
-
       - name: untar app
         run: tar -xvf output.tar.gz
-      - name: list folder
-        run: ls -alR ${GITHUB_WORKSPACE}
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
@@ -66,10 +62,11 @@ jobs:
 
       - name: Unit Test
         working-directory: ${GITHUB_WORKSPACE}/output
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+        run: dotnet vstest EmployeesApp.Tests.dll
+
       - name: Integrations Test
         working-directory: ${GITHUB_WORKSPACE}/output
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+        run: dotnet vstest EmployeesApp.IntegrationTests.dll
 
   build:
     runs-on: ubuntu-18.04
