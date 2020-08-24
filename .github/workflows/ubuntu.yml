@@ -7,51 +7,52 @@ on:
     branches: [ui-testing-selenium]
 
 jobs:
-  # setupMSSql:
-  #   runs-on: ubuntu-18.04
-  #   steps:
-  #     - uses: actions/checkout@v2
+  setupMSSql:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Setup MSSql
-  #       run: |
-  #         chmod +x ./setupDB.sh
-  #         ./setupDB.sh
-  #       shell: bash
+      - name: Setup MSSql
+        run: |
+          chmod +x ./setupDB.sh
+          ./setupDB.sh
+        shell: bash
 
-  # e2etest:
-  #   needs: [build, tests, setupMSSql]
-  #   runs-on: ubuntu-18-04
-  #   steps:
-  #     - name: Download Output folder
-  #       uses: actions/download-artifact@v1
-  #       with:
-  #         name: Temp
+  e2etest:
+    needs: [build, tests, setupMSSql]
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Download Output folder
+        uses: actions/download-artifact@v1
+        with:
+          name: temp
 
-  #     - name: untar Temp
-  #       run: tar -xvf  Temp
+      - name: untar temp
+        run: tar -xvf  temp
 
-  #     - name: Setup .NET Core
-  #       uses: actions/setup-dotnet@v1
-  #       with:
-  #         dotnet-version: 3.1.301
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
 
-  #     - name: Start Server And Run Test
-  #       working-directory: ./Temp
-  #       run: |
-  #         (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
-  #       shell: bash
+      - name: Start Server And Run Test
+        working-directory: ./Temp
+        run: |
+          (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
+        shell: bash
 
   tests:
     needs: build
-    runs-on: ubuntu-18-04
+    runs-on: ubuntu-18.04
     steps:
-      # - name: Download Output folder
-      #   uses: actions/download-artifact@v1
-      #   with:
-      #     name: Temp
+      - name: Download Output folder
+        uses: actions/download-artifact@v1
+        with:
+          name: Temp
 
-      # - name: untar Temp
-      #   run: tar -xvf  Temp
+      - name: untar Temp
+        run: tar -xvf  Temp
+
       - name: check
         run: |
           pwd
@@ -69,20 +70,20 @@ jobs:
         run: |
           date
 
-      # - name: Setup .NET Core
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: 3.1.301
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
 
       - name: Hello
         run: echo "Hello World!!!!!!!!!!!!!!!!!!!!!"
 
-      # - name: Unit Test
-      #   working-directory: ./Temp/
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-      # - name: Integrations Test
-      #   working-directory: ./Temp/
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+      - name: Unit Test
+        working-directory: ./Temp/
+        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+      - name: Integrations Test
+        working-directory: ./Temp/
+        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   # upload_artefact:
   #   needs: [e2etest]
