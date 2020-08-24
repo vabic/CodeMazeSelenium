@@ -25,15 +25,18 @@ jobs:
       - name: Download Output folder
         uses: actions/download-artifact@v1
         with:
-          name: output/
+          name: temp
       
+      - name: untar temp
+        run: tar -xvf  temp
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
 
       - name: Start Server And Run Test
-        working-directory: ./output
+        working-directory: ./temp
         run: |
           (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
         shell: bash
@@ -45,17 +48,22 @@ jobs:
       - name: Download Output folder
         uses: actions/download-artifact@v1
         with:
-          name: output/
-      
+          name: temp
+
+      - name: untar temp
+        run: tar -xvf  temp
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
 
       - name: Unit Test
+        working-directory: ./temp/
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
 
       - name: Integrations Test
+        working-directory: ./temp/
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   upload_artefact:
@@ -68,7 +76,7 @@ jobs:
       - name: uploading...
         uses: actions/upload-artifact@v2
         with:
-          name: EmployeesApp
+          name: temp
           path: output.tar.gz
 
   build:
@@ -91,11 +99,14 @@ jobs:
         run: |
           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
 
-      - name: Upload published output
+      - name: Compress output
+        run: tar -zcvf output.tar.gz ./output
+
+      - name: uploading...
         uses: actions/upload-artifact@v2
         with:
           name: EmployeesApp
-          path: ./output/
+          path: output.tar.gz
         # - name: Compress output
         #   run: tar -zcvf output.tar.gz ./output
       # - name: Unit Test
