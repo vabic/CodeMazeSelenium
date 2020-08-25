@@ -20,7 +20,7 @@ jobs:
         run: nuget restore EmployeesApp\EmployeesApp.sln
 
       - name: List Workspace variable
-        run: ls -alR "%GITHUB_WORKSPACE%
+        run: ls -alR %GITHUB_WORKSPACE%
 
       - name: Build and Publish Web App
         run: msbuild EmployeesApp\EmployeesApp.sln /t:Restore /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
@@ -29,7 +29,7 @@ jobs:
       - name: find dacpac
         run: |
           echo "ls my project\bin\Debug\"
-          ls "%GITHUB_WORKSPACE%\MercuryHealthDB\bin\Release"
+          ls "%GITHUB_WORKSPACE%\EmployeesApp\bin\Release"
       - name: Upload Artifact
         uses: actions/upload-artifact@v1.0.0
         with:
