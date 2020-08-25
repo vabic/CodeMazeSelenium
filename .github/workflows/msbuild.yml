@@ -11,15 +11,12 @@ jobs:
         name: Checkout Code
 
       - name: List Workspace variable
-        run: echo  "%GITHUB_WORKSPACE%\"
-      - name: List Workspace variable
-        run: echo  %GITHUB_WORKSPACE%\
-
-      - name: List Workspace variable
         run: ls
       - name: List Workspace variable
-        run: ls -alR
+        run: dir \s
 
+      - name: treee command
+        run: tree
       - name: List CD
         run: echo  "%CD%\"
       - name: List ls
