@@ -11,17 +11,20 @@ jobs:
         name: Checkout Code
 
       - name: List Workspace variable
-        run: echo  "%GITHUB_WORKSPACE%"
+        run: echo  "%GITHUB_WORKSPACE%\"
+      - name: List Workspace variable
+        run: echo  %GITHUB_WORKSPACE%\
 
       - name: List Workspace variable
         run: ls
+
       - name: List Workspace variable
         run: ls  %GITHUB_WORKSPACE%
 
       - name: List CD
-        run: echo  "%CD%"
+        run: echo  "%CD%\"
       - name: List ls
-        run: ls  "%CD%"
+        run: ls  %CD%\
 
       - name: Setup MSBuild Path
         uses: warrenbuckley/Setup-MSBuild@v1
