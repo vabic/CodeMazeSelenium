@@ -30,8 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Publish
-        run: |
-          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+        run: dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
       - name: Setup MSSql
         run: |
           chmod +x ./setupDB.sh
@@ -45,8 +44,7 @@ jobs:
 
       - name: Start Server And Run Test
         working-directory: ./output
-        run: |
-          (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
+        run: (nohup ./EmployeesApp)&  (sleep 3 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
         shell: bash
 
   build:
