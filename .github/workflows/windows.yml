@@ -18,52 +18,52 @@ jobs:
   #         ./setupDB.sh
   #       shell: bash
 
-  e2etest:
-    needs: [build, tests, setupMSSql]
-    runs-on: ubuntu-18-04
-    steps:
-      - name: Download Output folder
-        uses: actions/download-artifact@v1
-        with:
-          name: Temp
+  # e2etest:
+  #   needs: [build, tests, setupMSSql]
+  #   runs-on: ubuntu-18-04
+  #   steps:
+  #     - name: Download Output folder
+  #       uses: actions/download-artifact@v1
+  #       with:
+  #         name: Temp
 
-      - name: untar Temp
-        run: tar -xvf  Temp
+  #     - name: untar Temp
+  #       run: tar -xvf  Temp
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.301
+  #     - name: Setup .NET Core
+  #       uses: actions/setup-dotnet@v1
+  #       with:
+  #         dotnet-version: 3.1.301
 
-      - name: Start Server And Run Test
-        working-directory: ./Temp
-        run: |
-          (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
-        shell: bash
+  #     - name: Start Server And Run Test
+  #       working-directory: ./Temp
+  #       run: |
+  #         (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
+  #       shell: bash
 
-  tests:
-    needs: build
-    runs-on: ubuntu-18-04
-    steps:
-      - name: Download Output folder
-        uses: actions/download-artifact@v1
-        with:
-          name: Temp
+  # tests:
+  #   needs: build
+  #   runs-on: ubuntu-18-04
+  #   steps:
+  #     - name: Download Output folder
+  #       uses: actions/download-artifact@v1
+  #       with:
+  #         name: Temp
 
-      - name: untar Temp
-        run: tar -xvf  Temp
+  #     - name: untar Temp
+  #       run: tar -xvf  Temp
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.301
+  #     - name: Setup .NET Core
+  #       uses: actions/setup-dotnet@v1
+  #       with:
+  #         dotnet-version: 3.1.301
 
-      # - name: Unit Test
-      #   working-directory: ./Temp/
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-      # - name: Integrations Test
-      #   working-directory: ./Temp/
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+  # - name: Unit Test
+  #   working-directory: ./Temp/
+  #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+  # - name: Integrations Test
+  #   working-directory: ./Temp/
+  #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
   # upload_artefact:
   #   needs: [e2etest]
@@ -104,7 +104,7 @@ jobs:
       - name: uploading...
         uses: actions/upload-artifact@v2
         with:
-          name: Temp
+          name: windows
           path: output.tar.gz
         # - name: Compress output
         #   run: tar -zcvf output.tar.gz ./output
