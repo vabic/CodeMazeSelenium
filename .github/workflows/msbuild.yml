@@ -12,15 +12,15 @@ jobs:
 
       - name: List Workspace variable
         run: ls
-      - name: List Workspace variable
-        run: ls -h
 
       - name: treee command
         run: tree
       - name: List CD
-        run: echo  "%CD%\"
+        run: echo  %CD%
+        shell: cmd
       - name: List ls
-        run: ls  %CD%\
+        run: ls  %CD%
+        shell: cmd
 
       - name: Setup MSBuild Path
         uses: warrenbuckley/Setup-MSBuild@v1
