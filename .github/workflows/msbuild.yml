@@ -18,12 +18,17 @@ jobs:
       - name: List CD
         run: echo  %CD%
         shell: cmd
-        
+
       - name: List ls
         run: ls  %CD%
-        shell: cmd      
+        shell: cmd
+
       - name: List ls
-        run: ls  ls "%GITHUB_WORKSPACE%
+        run: |
+          ls  %GITHUB_WORKSPACE%
+        shell: cmd
+      - name: List ls
+        run: ls  "%GITHUB_WORKSPACE%"
         shell: cmd
 
       - name: Setup MSBuild Path
@@ -43,7 +48,7 @@ jobs:
         run: |
           echo "ls my project\bin\Debug\"
           ls "%GITHUB_WORKSPACE%\EmployeesApp\bin\Release"
-          shell: cmd
+        shell: cmd
       - name: Upload Artifact
         uses: actions/upload-artifact@v1.0.0
         with:
