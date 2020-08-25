@@ -41,13 +41,13 @@ jobs:
         run: nuget restore EmployeesApp\EmployeesApp.sln
 
       - name: Build and Publish Web App
-        run: msbuild EmployeesApp\EmployeesApp.sln /t:Restore /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+        run: msbuild EmployeesApp\EmployeesApp.sln /p:Configuration=Release /p:DeployOnBuild=true
 
         # look for dacpac
       - name: find dacpac
         run: |
           echo "ls my project\bin\Debug\"
-          ls "%GITHUB_WORKSPACE%\EmployeesApp\bin\Release"
+          ls "%GITHUB_WORKSPACE%\EmployeesApp\"
         shell: cmd
       - name: Upload Artifact
         uses: actions/upload-artifact@v1.0.0
