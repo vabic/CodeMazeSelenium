@@ -49,8 +49,7 @@ jobs:
 
       - name: Start Server And Run Test
         working-directory: ./output
-        run: |
-          (./EmployeesApp)&  (dotnet vstest EmployeesApp.AutomatedUITests.dll)
+        run: (./EmployeesApp)&  (sleep 3 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
         shell: bash
 
       #       - name: Selenium Tests
