@@ -18,8 +18,12 @@ jobs:
       - name: List CD
         run: echo  %CD%
         shell: cmd
+        
       - name: List ls
         run: ls  %CD%
+        shell: cmd      
+      - name: List ls
+        run: ls  ls "%GITHUB_WORKSPACE%
         shell: cmd
 
       - name: Setup MSBuild Path
@@ -31,12 +35,6 @@ jobs:
       - name: Restore NuGet Packages
         run: nuget restore EmployeesApp\EmployeesApp.sln
 
-      - name: List Workspace variable
-        run: echo  "%GITHUB_WORKSPACE%"
-
-      - name: List CD
-        run: echo  "%CD%"
-
       - name: Build and Publish Web App
         run: msbuild EmployeesApp\EmployeesApp.sln /t:Restore /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
 
@@ -45,6 +43,7 @@ jobs:
         run: |
           echo "ls my project\bin\Debug\"
           ls "%GITHUB_WORKSPACE%\EmployeesApp\bin\Release"
+          shell: cmd
       - name: Upload Artifact
         uses: actions/upload-artifact@v1.0.0
         with:
