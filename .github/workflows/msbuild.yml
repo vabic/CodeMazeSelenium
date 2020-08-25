@@ -19,8 +19,11 @@ jobs:
       - name: Restore NuGet Packages
         run: nuget restore EmployeesApp\EmployeesApp.sln
 
-      # - name: List Workspace variable
-      #   run: ls  "%GITHUB_WORKSPACE%"
+      - name: List Workspace variable
+        run: echo  %GITHUB_WORKSPACE%
+
+      - name: List CD
+        run: echo  %CD%
 
       - name: Build and Publish Web App
         run: msbuild EmployeesApp\EmployeesApp.sln /t:Restore /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
