@@ -13,7 +13,7 @@ jobs:
       - name: List Workspace variable
         run: ls
       - name: List Workspace variable
-        run: dir \s
+        run: ls -h
 
       - name: treee command
         run: tree
