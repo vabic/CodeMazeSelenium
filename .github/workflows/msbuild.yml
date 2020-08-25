@@ -17,9 +17,8 @@ jobs:
 
       - name: List Workspace variable
         run: ls
-
       - name: List Workspace variable
-        run: ls  %GITHUB_WORKSPACE%
+        run: ls -alR
 
       - name: List CD
         run: echo  "%CD%\"
