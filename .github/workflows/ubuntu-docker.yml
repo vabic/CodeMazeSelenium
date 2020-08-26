@@ -23,23 +23,23 @@ jobs:
           print(os.environ['PATH'])
         shell: python
 
-      - name: Install dependencies
-        run: dotnet restore ./EmployeesApp/EmployeesApp.sln
+      # - name: Install dependencies
+      #   run: dotnet restore ./EmployeesApp/EmployeesApp.sln
 
-      - name: Build
-        run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+      # - name: Build
+      #   run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
 
-      - name: Publish
-        run: |
-          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
-      - name: Compress output
-        run: tar -zcvf output.tar.gz ./output
+      # - name: Publish
+      #   run: |
+      #     dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+      # - name: Compress output
+      #   run: tar -zcvf output.tar.gz ./output
 
-      - name: Unit Test
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+      # - name: Unit Test
+      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
 
-      - name: Integrations Test
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+      # - name: Integrations Test
+      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
       # - name: Setup MSSql
       #   run: |
@@ -53,9 +53,13 @@ jobs:
       #   shell: bash
 
       - name: Docker-compose
-        run: docker-compose up -d
+        run: |
+          docker-compose up -d
+          docker-compose ps
       - name: UITest
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
+        run: |
+          docker-compose ps
+         dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - uses: actions/upload-artifact@v2
         with:
