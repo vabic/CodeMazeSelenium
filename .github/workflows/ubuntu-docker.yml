@@ -59,7 +59,7 @@ jobs:
       - name: UITest
         run: |
           docker-compose ps
-         dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
+          dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - uses: actions/upload-artifact@v2
         with:
