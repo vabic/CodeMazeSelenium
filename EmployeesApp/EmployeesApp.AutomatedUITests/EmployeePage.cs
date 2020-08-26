@@ -1,11 +1,9 @@
 ﻿using OpenQA.Selenium;
 
-namespace EmployeesApp.UITests
-{
-    public class EmployeePage
-    {
+namespace EmployeesApp.UITests {
+    public class EmployeePage {
         private readonly IWebDriver _driver;
-        private const string URI = "https://localhost:5001/Employees/Create";
+        private const string URI = "http://localhost:8080/Employees/Create";
 
         private IWebElement NameElement => _driver.FindElement(By.Id("Name"));
         private IWebElement AgeElement => _driver.FindElement(By.Id("Age"));
@@ -16,13 +14,12 @@ namespace EmployeesApp.UITests
         public string Source => _driver.PageSource;
         public string AccountNumberErrorMessage => _driver.FindElement(By.Id("AccountNumber-error")).Text;
 
-        public EmployeePage(IWebDriver driver)
-        {
+        public EmployeePage(IWebDriver driver) {
             _driver = driver;
         }
 
         public void Navigate() => _driver.Navigate()
-                .GoToUrl(URI);
+            .GoToUrl(URI);
 
         public void PopulateName(string name) => NameElement.SendKeys(name);
         public void PopulateAge(string age) => AgeElement.SendKeys(age);
