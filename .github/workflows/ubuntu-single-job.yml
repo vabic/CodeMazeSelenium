@@ -1,4 +1,4 @@
-name: .NET Core uubntu single job
+name: .NET Core Ubuntu single job
 
 on:
   push:
@@ -41,16 +41,22 @@ jobs:
       - name: Integrations Test
         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
-      - name: Setup MSSql
-        run: |
-          chmod +x ./setupDB.sh
-          ./setupDB.sh
-        shell: bash
+      # - name: Setup MSSql
+      #   run: |
+      #     chmod +x ./setupDB.sh
+      #     ./setupDB.sh
+      #   shell: bash
 
-      - name: Start Server And Run Test
+      # - name: Start Server And Run Test
+      #   working-directory: ./output
+      #   run: (./EmployeesApp)&  (sleep 15 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
+      #   shell: bash
+
+      - name: Docker-compose
+        run: docker-compose up -d
+      - name: AutomatedUITests
         working-directory: ./output
-        run: (./EmployeesApp)&  (sleep 15 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
-        shell: bash
+        run: dotnet vstest EmployeesApp.AutomatedUITests.dll
 
       - uses: actions/upload-artifact@v2
         with:
