@@ -56,10 +56,10 @@ jobs:
         run: |
           docker-compose build
           docker-compose up -d
-          sleep 5
-      - name: AutomatedUITests
-        working-directory: ./output
-        run: dotnet vstest EmployeesApp.AutomatedUITests.dll
+          dotnet --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests/
+      # - name: AutomatedUITests
+      #   working-directory: ./output
+      #   run: dotnet vstest EmployeesApp.AutomatedUITests.dll
 
       - uses: actions/upload-artifact@v2
         with:
