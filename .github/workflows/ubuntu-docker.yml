@@ -53,7 +53,9 @@ jobs:
       #   shell: bash
 
       - name: Docker-compose
-        run: docker-compose up -d &&  dotnet --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
+        run: docker-compose up -d
+      - name: UITest
+        run: dotnet --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - uses: actions/upload-artifact@v2
         with:
