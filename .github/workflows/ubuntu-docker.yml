@@ -53,13 +53,7 @@ jobs:
       #   shell: bash
 
       - name: Docker-compose
-        run: |
-          docker-compose build
-          docker-compose up -d
-          dotnet --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests/
-      # - name: AutomatedUITests
-      #   working-directory: ./output
-      #   run: dotnet vstest EmployeesApp.AutomatedUITests.dll
+        run: docker-compose up -d &&  dotnet --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - uses: actions/upload-artifact@v2
         with:
