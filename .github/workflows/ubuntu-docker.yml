@@ -17,49 +17,34 @@ jobs:
         with:
           dotnet-version: 3.1.301
 
-      - name: Display the path
+      - name: Install dependencies
+        run: dotnet restore ./EmployeesApp/EmployeesApp.sln
+
+      - name: Build
+        run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+
+      - name: Unit Test
+        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+
+      - name: Integrations Test
+        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+
+      - name: Docker-compose
         run: |
-          import os
-          print(os.environ['PATH'])
-        shell: python
+        docker-compose up -d
+        docker-compose ps
 
-      # - name: Install dependencies
-      #   run: dotnet restore ./EmployeesApp/EmployeesApp.sln
-
-      # - name: Build
-      #   run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+      - name: UITest
+        run: |
+        docker-compose ps
+        dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - name: Publish
         run: |
           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+
       - name: Compress output
         run: tar -zcvf output.tar.gz ./output
-
-      # - name: Unit Test
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-
-      # - name: Integrations Test
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
-
-      # - name: Setup MSSql
-      #   run: |
-      #     chmod +x ./setupDB.sh
-      #     ./setupDB.sh
-      #   shell: bash
-
-      # - name: Start Server And Run Test
-      #   working-directory: ./output
-      #   run: (./EmployeesApp)&  (sleep 15 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
-      #   shell: bash
-
-      - name: Docker-compose
-        run: |
-          docker-compose up -d
-          #docker-compose ps
-      - name: UITest
-        run: |
-          docker-compose ps
-          dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - uses: actions/upload-artifact@v2
         with:
