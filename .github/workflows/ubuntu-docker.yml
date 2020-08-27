@@ -29,11 +29,11 @@ jobs:
       # - name: Build
       #   run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
 
-      # - name: Publish
-      #   run: |
-      #     dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
-      # - name: Compress output
-      #   run: tar -zcvf output.tar.gz ./output
+      - name: Publish
+        run: |
+          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+      - name: Compress output
+        run: tar -zcvf output.tar.gz ./output
 
       # - name: Unit Test
       #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
@@ -63,5 +63,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: UbuntuSingleJob
+          name: UbuntuDocker
           path: output.tar.gz
