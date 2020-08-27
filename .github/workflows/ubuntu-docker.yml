@@ -36,8 +36,8 @@ jobs:
 
       - name: UITest
         run: |
-        docker-compose ps
-        dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
+          docker-compose ps
+          dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
 
       - name: Publish
         run: |
