@@ -31,8 +31,8 @@ jobs:
 
       - name: Docker-compose
         run: |
-        docker-compose up -d
-        docker-compose ps
+          docker-compose up -d
+          docker-compose ps
 
       - name: UITest
         run: |
