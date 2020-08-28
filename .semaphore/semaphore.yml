@@ -1,0 +1,59 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: setup dotnet
+    task:
+      jobs:
+        - name: Checkout code
+          commands:
+            - checkout
+            - dotnet restore EmployeesApp/EmployeesApp.sln
+            - dotnet publish -c Release -o output EmployeesApp/Employe
+        - name: Install dotnet
+          commands:
+            - 'wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb'
+            - sudo dpkg -i packages-microsoft-prod.deb
+            - sudo apt-get update; \
+            - '  sudo apt-get install -y apt-transport-https && \'
+            - '  sudo apt-get update && \'
+            - '  sudo apt-get install -y dotnet-sdk-3.1'
+            - sudo apt-get update; \
+            - '  sudo apt-get install -y apt-transport-https && \'
+            - '  sudo apt-get update && \'
+            - '  sudo apt-get install -y aspnetcore-runtime-3.1'
+    dependencies: []
+  - name: 'Block #2'
+    dependencies:
+      - setup dotnet
+    task:
+      jobs:
+        - name: Restore
+          commands:
+            - checkout
+            - dotnet restore EmployeesApp/EmployeesApp.sln
+            - dotnet publish -c Release -o output EmployeesApp/Employe
+        - name: docker up
+          commands:
+            - cd EmployeesApp/EmployeesApp
+            - docker-compose build
+            - docker-compose up -d
+  - name: 'Block #3'
+    dependencies:
+      - 'Block #2'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - cd output
+            - dotnet vstest EmployeesApp.Tests.dll
+        - name: 'Job #2'
+          commands:
+            - dotnet vstest EmployeesApp.IntegrationTests.dll
+        - name: 'Check docker '
+          commands:
+            - cd EmployeesApp/EmployeesApp
+            - docker-compose ps
