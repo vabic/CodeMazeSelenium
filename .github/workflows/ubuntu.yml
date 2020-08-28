@@ -1,74 +1,74 @@
-name: .NET Core Ubuntu
+# name: .NET Core Ubuntu
 
-on:
-  push:
-    branches: [ui-testing-selenium]
-  pull_request:
-    branches: [ui-testing-selenium]
+# on:
+#   push:
+#     branches: [ui-testing-selenium]
+#   pull_request:
+#     branches: [ui-testing-selenium]
 
-jobs:
-  publish:
-    needs: [e2etest, build]
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Publish
-        run: |
-          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+# jobs:
+#   publish:
+#     needs: [e2etest, build]
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Publish
+#         run: |
+#           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
 
-      - name: Compress output
-        run: tar -zcvf output.tar.gz ./output
+#       - name: Compress output
+#         run: tar -zcvf output.tar.gz ./output
 
-      - name: publishing...
-        uses: actions/upload-artifact@v2
-        with:
-          name: EmployeesAppUbuntu
-          path: output.tar.gz
+#       - name: publishing...
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: EmployeesAppUbuntu
+#           path: output.tar.gz
 
-  e2etest:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Publish
-        run: dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
-      - name: Setup MSSql
-        run: |
-          chmod +x ./setupDB.sh
-          ./setupDB.sh
-        shell: bash
+#   e2etest:
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Publish
+#         run: dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+#       - name: Setup MSSql
+#         run: |
+#           chmod +x ./setupDB.sh
+#           ./setupDB.sh
+#         shell: bash
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.301
+#       - name: Setup .NET Core
+#         uses: actions/setup-dotnet@v1
+#         with:
+#           dotnet-version: 3.1.301
 
-      - name: Start Server And Run Test
-        working-directory: ./output
-        run: (./EmployeesApp)&  (sleep 5 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
-        shell: bash
+#       - name: Start Server And Run Test
+#         working-directory: ./output
+#         run: (./EmployeesApp)&  (sleep 5 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
+#         shell: bash
 
-  build:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.x
+#   build:
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Setup .NET Core
+#         uses: actions/setup-dotnet@v1
+#         with:
+#           dotnet-version: 3.1.x
 
-      - name: Install dependencies
-        run: dotnet restore ./EmployeesApp/EmployeesApp.sln
+#       - name: Install dependencies
+#         run: dotnet restore ./EmployeesApp/EmployeesApp.sln
 
-      - name: Build
-        run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+#       - name: Build
+#         run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
 
-      - name: Publish
-        run: |
-          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
+#       - name: Publish
+#         run: |
+#           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
 
-      - name: Unit Test
-        working-directory: ./output
-        run: dotnet vstest EmployeesApp.Tests.dll
-      - name: Integrations Test
-        working-directory: ./output
-        run: dotnet vstest EmployeesApp.IntegrationTests.dll
+#       - name: Unit Test
+#         working-directory: ./output
+#         run: dotnet vstest EmployeesApp.Tests.dll
+#       - name: Integrations Test
+#         working-directory: ./output
+#         run: dotnet vstest EmployeesApp.IntegrationTests.dll

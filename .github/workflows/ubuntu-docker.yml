@@ -1,10 +1,6 @@
 name: .NET Core Ubuntu Docker
 
-on:
-  push:
-    branches: [ui-testing-selenium]
-  pull_request:
-    branches: [ui-testing-selenium]
+on: [push]
 
 jobs:
   build:

@@ -1,43 +1,43 @@
-name: Build msbuild
+# name: Build msbuild
 
-on: [push]
+# on: [push]
 
-jobs:
-  build:
-    runs-on: windows-latest
+# jobs:
+#   build:
+#     runs-on: windows-latest
 
-    steps:
-      - uses: actions/checkout@v1
-        name: Checkout Code
+#     steps:
+#       - uses: actions/checkout@v1
+#         name: Checkout Code
 
-      - name: treee command
-        run: tree
+#       - name: treee command
+#         run: tree
 
-      - name: List ls
-        run: ls  "%GITHUB_WORKSPACE%"
-        shell: cmd
+#       - name: List ls
+#         run: ls  "%GITHUB_WORKSPACE%"
+#         shell: cmd
 
-      - name: Setup MSBuild Path
-        uses: warrenbuckley/Setup-MSBuild@v1
+#       - name: Setup MSBuild Path
+#         uses: warrenbuckley/Setup-MSBuild@v1
 
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.2
+#       - name: Setup NuGet
+#         uses: NuGet/setup-nuget@v1.0.2
 
-      - name: Restore NuGet Packages
-        run: nuget restore EmployeesApp\EmployeesApp.sln
+#       - name: Restore NuGet Packages
+#         run: nuget restore EmployeesApp\EmployeesApp.sln
 
-      - name: Build and Publish Web App
-        run: msbuild EmployeesApp\EmployeesApp.sln /p:Configuration=Release /p:DeployOnBuild=true
+#       - name: Build and Publish Web App
+#         run: msbuild EmployeesApp\EmployeesApp.sln /p:Configuration=Release /p:DeployOnBuild=true
 
-        # look for dacpac
-      - name: find dacpac
-        run: |
-          echo "ls my project\bin\Debug\"
-          tree
-          ls %GITHUB_WORKSPACE%\EmployeesApp\
-        shell: cmd
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: published_webapp
-          path: EmployeesApp\EmployeesApp\bin\Release\
+#         # look for dacpac
+#       - name: find dacpac
+#         run: |
+#           echo "ls my project\bin\Debug\"
+#           tree
+#           ls %GITHUB_WORKSPACE%\EmployeesApp\
+#         shell: cmd
+#       - name: Upload Artifact
+#         uses: actions/upload-artifact@v1.0.0
+#         with:
+#           name: published_webapp
+#           path: EmployeesApp\EmployeesApp\bin\Release\

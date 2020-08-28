@@ -1,64 +1,64 @@
-name: .NET Core Ubuntu single job
+# name: .NET Core Ubuntu single job
 
-on:
-  push:
-    branches: [ui-testing-selenium]
-  pull_request:
-    branches: [ui-testing-selenium]
+# on:
+#   push:
+#     branches: [ui-testing-selenium]
+#   pull_request:
+#     branches: [ui-testing-selenium]
 
-jobs:
-  build:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.301
+#       - name: Setup .NET Core
+#         uses: actions/setup-dotnet@v1
+#         with:
+#           dotnet-version: 3.1.301
 
-      - name: Display the path
-        run: |
-          import os
-          print(os.environ['PATH'])
-        shell: python
+#       - name: Display the path
+#         run: |
+#           import os
+#           print(os.environ['PATH'])
+#         shell: python
 
-      - name: Install dependencies
-        run: dotnet restore ./EmployeesApp/EmployeesApp.sln
+#       - name: Install dependencies
+#         run: dotnet restore ./EmployeesApp/EmployeesApp.sln
 
-      - name: Build
-        run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+#       - name: Build
+#         run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
 
-      - name: Publish
-        run: |
-          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
-      - name: Compress output
-        run: tar -zcvf output.tar.gz ./output
+#       - name: Publish
+#         run: |
+#           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+#       - name: Compress output
+#         run: tar -zcvf output.tar.gz ./output
 
-      - name: Unit Test
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
+#       - name: Unit Test
+#         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
 
-      - name: Integrations Test
-        run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
+#       - name: Integrations Test
+#         run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
 
-      - name: Setup MSSql
-        run: |
-          chmod +x ./setupDB.sh
-          ./setupDB.sh
-        shell: bash
+#       - name: Setup MSSql
+#         run: |
+#           chmod +x ./setupDB.sh
+#           ./setupDB.sh
+#         shell: bash
 
-      - name: Start Server And Run Test
-        working-directory: ./output
-        run: (./EmployeesApp)&  (sleep 15 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
-        shell: bash
+#       - name: Start Server And Run Test
+#         working-directory: ./output
+#         run: (./EmployeesApp)&  (sleep 15 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
+#         shell: bash
 
-      # - name: Docker-compose
-      #   run: docker-compose up -d
-      # - name: AutomatedUITests
-      #   working-directory: ./output
-      #   run: dotnet vstest EmployeesApp.AutomatedUITests.dll
+#       # - name: Docker-compose
+#       #   run: docker-compose up -d
+#       # - name: AutomatedUITests
+#       #   working-directory: ./output
+#       #   run: dotnet vstest EmployeesApp.AutomatedUITests.dll
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: UbuntuSingleJob
-          path: output.tar.gz
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: UbuntuSingleJob
+#           path: output.tar.gz
