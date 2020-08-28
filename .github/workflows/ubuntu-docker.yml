@@ -38,6 +38,7 @@ jobs:
         working-directory: ./output
         run: |
           docker-compose ps
+          sleep 10
           dotnet vstest EmployeesApp.AutomatedUITests.dll
 
       - name: Compress output
