@@ -4,8 +4,6 @@ services:
     build:
       context: ./EmployeesApp/EmployeesApp
       dockerfile: Dockerfile
-    volumes:
-      - ./EmployeesApp/EmployeesApp:/app
     ports:
       - "8080:5050"
     depends_on:

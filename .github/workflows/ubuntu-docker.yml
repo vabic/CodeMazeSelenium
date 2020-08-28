@@ -11,7 +11,11 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.301
+          dotnet-version: 3.1.x
+
+      - name: Restore sln
+          run: dotnet restore EmployeesApp/EmployeesApp.sln
+
 
       #       - name: Publish
       #         run: |
@@ -27,7 +31,7 @@ jobs:
 
       - name: Docker-compose
         run: |
-          docker-compose up -d
+          docker-compose up
           docker-compose ps
 
       - name: AutomatedUITests
@@ -35,7 +39,7 @@ jobs:
         run: |
           docker-compose ps
           sleep 10
-          dotnet test EmployeesApp/EmployeesApp.AutomatedUITests
+          dotnet test EmployeesApp/EmployeesApp.AutomatedUITests --no-restore
 
       - name: Compress output
         run: tar -zcvf output.tar.gz ./output
