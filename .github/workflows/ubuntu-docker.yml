@@ -17,6 +17,7 @@ jobs:
         working-directory: EmployeesApp/EmployeesApp
         run: |
           docker-compose up -d
+          docker-compose ps
 
       - name: Restore sln
         run: dotnet restore EmployeesApp/EmployeesApp.sln
@@ -34,6 +35,7 @@ jobs:
         run: dotnet vstest EmployeesApp.IntegrationTests.dll
 
       - name: Check docker is running
+        working-directory: EmployeesApp/EmployeesApp
         run: |
           docker-compose ps
 
