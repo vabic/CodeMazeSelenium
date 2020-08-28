@@ -14,8 +14,7 @@ jobs:
           dotnet-version: 3.1.x
 
       - name: Restore sln
-          run: dotnet restore EmployeesApp/EmployeesApp.sln
-
+        run: dotnet restore EmployeesApp/EmployeesApp.sln
 
       #       - name: Publish
       #         run: |
