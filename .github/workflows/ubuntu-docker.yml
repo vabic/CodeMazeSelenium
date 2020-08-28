@@ -1,10 +1,6 @@
 name: .NET Core Ubuntu Docker
 
-on:
-  push:
-    branches: [ui-testing-selenium]
-  pull_request:
-    branches: [ui-testing-selenium]
+on: push
 
 jobs:
   build:
@@ -17,17 +13,17 @@ jobs:
         with:
           dotnet-version: 3.1.301
 
-      - name: Publish
-        run: |
-          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+#       - name: Publish
+#         run: |
+#           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
 
-      - name: Unit Test
-        working-directory: ./output
-        run: dotnet vstest EmployeesApp.Tests.dll
+#       - name: Unit Test
+#         working-directory: ./output
+#         run: dotnet vstest EmployeesApp.Tests.dll
 
-      - name: Integrations Test
-        working-directory: ./output
-        run: dotnet vstest EmployeesApp.IntegrationTests.dll
+#       - name: Integrations Test
+#         working-directory: ./output
+#         run: dotnet vstest EmployeesApp.IntegrationTests.dll
 
       - name: Docker-compose
         run: |
