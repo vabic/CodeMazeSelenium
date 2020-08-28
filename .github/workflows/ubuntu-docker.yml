@@ -32,13 +32,12 @@ jobs:
         run: |
           docker-compose up -d
           docker-compose ps
-          dotnet test EmployeesApp/EmployeesApp.AutomatedUITests
 
       - name: AutomatedUITests
         # working-directory: ./output
         run: |
           docker-compose ps
-          sleep 10
+          sleep 30
           dotnet test EmployeesApp/EmployeesApp.AutomatedUITests --no-restore
 
       - name: Compress output
