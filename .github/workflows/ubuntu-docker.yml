@@ -32,6 +32,7 @@ jobs:
         run: |
           docker-compose up -d
           docker-compose ps
+          dotnet test EmployeesApp/EmployeesApp.AutomatedUITests
 
       - name: AutomatedUITests
         # working-directory: ./output
