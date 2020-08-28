@@ -3,6 +3,40 @@ name: .NET Core Ubuntu Docker
 on: push
 
 jobs:
+  docker:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker-compose
+        working-directory: EmployeesApp/EmployeesApp
+        run: |
+          docker-compose up -d
+          docker-compose ps
+  
+  selenium:
+    needs: [build, docker]
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+      - name: verify Docker-compose
+        working-directory: EmployeesApp/EmployeesApp
+        run: |
+          docker-compose ps
+
+      - name: Publish
+        run: |
+          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+
+      - name: AutomatedUITests
+        working-directory: ./output
+        run: |
+          dotnet vstest EmployeesApp.AutomatedUITests.dll
+
+
   build:
     runs-on: ubuntu-18.04
     steps:
@@ -12,15 +46,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-
-      - name: Docker-compose
-        working-directory: EmployeesApp/EmployeesApp
-        run: |
-          docker-compose up -d
-          docker-compose ps
-
-      - name: Restore sln
-        run: dotnet restore EmployeesApp/EmployeesApp.sln
 
       - name: Publish
         run: |
@@ -39,15 +64,10 @@ jobs:
         run: |
           docker-compose ps
 
-      - name: AutomatedUITests
-        working-directory: ./output
-        run: |
-          dotnet vstest EmployeesApp.AutomatedUITests.dll
+      # - name: Compress output
+      #   run: tar -zcvf output.tar.gz ./output
 
-      - name: Compress output
-        run: tar -zcvf output.tar.gz ./output
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: UbuntuDocker
-          path: output.tar.gz
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: UbuntuDocker
+      #     path: output.tar.gz
