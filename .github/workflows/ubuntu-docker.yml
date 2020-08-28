@@ -13,17 +13,17 @@ jobs:
         with:
           dotnet-version: 3.1.301
 
-#       - name: Publish
-#         run: |
-#           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+      #       - name: Publish
+      #         run: |
+      #           dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
 
-#       - name: Unit Test
-#         working-directory: ./output
-#         run: dotnet vstest EmployeesApp.Tests.dll
+      #       - name: Unit Test
+      #         working-directory: ./output
+      #         run: dotnet vstest EmployeesApp.Tests.dll
 
-#       - name: Integrations Test
-#         working-directory: ./output
-#         run: dotnet vstest EmployeesApp.IntegrationTests.dll
+      #       - name: Integrations Test
+      #         working-directory: ./output
+      #         run: dotnet vstest EmployeesApp.IntegrationTests.dll
 
       - name: Docker-compose
         run: |
@@ -31,11 +31,11 @@ jobs:
           docker-compose ps
 
       - name: AutomatedUITests
-        working-directory: ./output
+        # working-directory: ./output
         run: |
           docker-compose ps
           sleep 10
-          dotnet vstest EmployeesApp.AutomatedUITests.dll
+          dotnet test EmployeesApp/EmployeesApp.AutomatedUITests
 
       - name: Compress output
         run: tar -zcvf output.tar.gz ./output
