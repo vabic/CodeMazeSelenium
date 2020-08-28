@@ -41,7 +41,7 @@ blocks:
             - docker-compose up -d
   - name: 'Block #3'
     dependencies:
-      - 'Block #2'
+      - 'Build project'
     task:
       jobs:
         - name: 'Job #1'
