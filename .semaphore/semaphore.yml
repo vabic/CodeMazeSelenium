@@ -28,8 +28,8 @@ blocks:
             - dotnet --list-runtimes
         - name: check dotnet version
           commands:
-            - sudo snap install dotnet-sdk
-            - sudo snap install dotnet-runtime
+            - sudo snap install dotnet-sdk --classic
+            - sudo snap install dotnet-runtime-31
             - dotnet --version
             - dotnet --list-sdks
             - dotnet --list-runtimes
