@@ -11,16 +11,20 @@ blocks:
         - name: Checkout code
           commands:
             - checkout
-            - pwd
-        - name: Install dotnet and cahce
-          commands:
             - sudo snap install dotnet-sdk --classic
             - sudo snap install dotnet-runtime-31
             - sudo snap alias dotnet-sdk.dotnet dotnet
-            - cache store dotnet_cache
+            - dotnet restore EmployeesApp/EmployeesApp.sln
+            - 'cache store '
+        - name: Install dotnet and cahce
+          commands:
+            - 'cache restore '
             - dotnet --version
             - dotnet --list-sdks
             - dotnet --list-runtimes
+      prologue:
+        commands:
+          - cache restore dotnet_cache
     dependencies: []
   - name: Build project
     dependencies:
@@ -34,9 +38,10 @@ blocks:
             - dotnet publish -c Release -o output EmployeesApp/Employe
         - name: docker up
           commands:
-            - cd EmployeesApp/EmployeesApp
-            - docker-compose build
-            - docker-compose up -d
+            - 'cache restore '
+            - dotnet --version
+            - dotnet --list-sdks
+            - dotnet --list-runtimes
       prologue:
         commands:
           - cache restore dotnet-cache
