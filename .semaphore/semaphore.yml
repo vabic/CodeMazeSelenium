@@ -30,6 +30,7 @@ blocks:
           commands:
             - sudo snap install dotnet-sdk --classic
             - sudo snap install dotnet-runtime-31
+            - sudo snap alias dotnet-sdk.dotnet dotnet
             - dotnet --version
             - dotnet --list-sdks
             - dotnet --list-runtimes
