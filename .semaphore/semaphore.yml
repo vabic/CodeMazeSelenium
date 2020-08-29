@@ -11,10 +11,9 @@ blocks:
         - name: Checkout code
           commands:
             - checkout
-            - echo pwd
+            - pwd
         - name: Install dotnet and cahce
           commands:
-            - cache restore dotnet_cache
             - sudo snap install dotnet-sdk --classic
             - sudo snap install dotnet-runtime-31
             - sudo snap alias dotnet-sdk.dotnet dotnet
@@ -22,19 +21,6 @@ blocks:
             - dotnet --version
             - dotnet --list-sdks
             - dotnet --list-runtimes
-        - name: check dotnet version
-          commands:
-            - 'cache restore '
-            - dotnet --version
-            - dotnet --list-sdks
-            - dotnet --list-runtimes
-      prologue:
-        commands:
-          - cache restore dotnet-cache
-      epilogue:
-        always:
-          commands:
-            - cache store dotnet-cache
     dependencies: []
   - name: Build project
     dependencies:
