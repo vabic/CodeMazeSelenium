@@ -11,30 +11,30 @@ blocks:
         - name: Checkout code
           commands:
             - checkout
-            - 'ls -al '
-        - name: Install dotnet
+            - echo pwd
+        - name: Install dotnet and cahce
           commands:
-            - 'wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb'
-            - sudo dpkg -i packages-microsoft-prod.deb
-            - sudo apt-get update
-            - sudo apt-get install -y apt-transport-https
-            - sudo apt-get update
-            - sudo apt-get install -y dotnet-sdk-3.1
-            - sudo apt-get update
-            - sudo apt-get install -y apt-transport-https
-            - sudo apt-get update
-            - sudo apt-get install -y aspnetcore-runtime-3.1
+            - cache restore dotnet_cache
+            - sudo snap install dotnet-sdk --classic
+            - sudo snap install dotnet-runtime-31
+            - sudo snap alias dotnet-sdk.dotnet dotnet
+            - cache store dotnet_cache
             - dotnet --version
             - dotnet --list-sdks
             - dotnet --list-runtimes
         - name: check dotnet version
           commands:
-            - sudo snap install dotnet-sdk --classic
-            - sudo snap install dotnet-runtime-31
-            - sudo snap alias dotnet-sdk.dotnet dotnet
+            - 'cache restore '
             - dotnet --version
             - dotnet --list-sdks
             - dotnet --list-runtimes
+      prologue:
+        commands:
+          - cache restore dotnet-cache
+      epilogue:
+        always:
+          commands:
+            - cache store dotnet-cache
     dependencies: []
   - name: Build project
     dependencies:
@@ -51,6 +51,9 @@ blocks:
             - cd EmployeesApp/EmployeesApp
             - docker-compose build
             - docker-compose up -d
+      prologue:
+        commands:
+          - cache restore dotnet-cache
   - name: 'Block #3'
     dependencies:
       - Build project
