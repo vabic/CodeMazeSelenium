@@ -16,12 +16,6 @@ blocks:
             - sudo snap alias dotnet-sdk.dotnet dotnet
             - dotnet restore EmployeesApp/EmployeesApp.sln
             - 'cache store '
-        - name: Install dotnet and cahce
-          commands:
-            - 'cache restore '
-            - dotnet --version
-            - dotnet --list-sdks
-            - dotnet --list-runtimes
       prologue:
         commands:
           - cache restore dotnet_cache
