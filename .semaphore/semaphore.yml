@@ -23,6 +23,9 @@ blocks:
             - sudo apt-get install -y apt-transport-https
             - sudo apt-get update
             - sudo apt-get install -y aspnetcore-runtime-3.1
+            - dotnet --version
+            - dotnet --list-sdks
+            - dotnet --list-runtimes
         - name: check dotnet version
           commands:
             - dotnet --version
