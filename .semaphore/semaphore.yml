@@ -38,7 +38,7 @@ blocks:
             - dotnet --list-runtimes
       prologue:
         commands:
-          - cache restore dotnet-cache
+          - cache restore
   - name: 'Block #3'
     dependencies:
       - Build project
