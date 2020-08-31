@@ -69,6 +69,6 @@ blocks:
           - sudo snap alias dotnet-sdk.dotnet dotnet
       env_vars:
         - name: DOCKER_COMPOSE_PATH
-          value: ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/docker-compose.yml
+          value: $SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/docker-compose.yml
         - name: PUBLISHED_PACKAGE
-          value: ~/$SEMAPHORE_PROJECT_NAME/output
+          value: $SEMAPHORE_PROJECT_NAME/output
