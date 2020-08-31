@@ -57,6 +57,7 @@ blocks:
             - pwd
             - cd ~/$SEMAPHORE_PROJECT_NAME/output
             - pwd
+            - sleep 15
             - dotnet vstest EmployeesApp.AutomatedUITests.dll
       prologue:
         commands:
