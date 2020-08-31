@@ -52,12 +52,12 @@ blocks:
       jobs:
         - name: 'Check docker '
           commands:
-            - docker-compose -f ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/docker-compose.yml up -d
+            - 'cd ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/ '
+            - docker-compose up -d
             - docker-compose ps
-            - pwd
             - cd ~/$SEMAPHORE_PROJECT_NAME/output
             - pwd
-            - sleep 15
+            - sleep 10
             - dotnet vstest EmployeesApp.AutomatedUITests.dll
       prologue:
         commands:
