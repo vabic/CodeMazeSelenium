@@ -13,7 +13,7 @@ blocks:
             - cd output/
             - dotnet vstest EmployeesApp.Tests.dll
             - dotnet vstest EmployeesApp.IntegrationTests.dll
-            - cache store dotnet-cache output/
+            - cache store dotnet-cache ./
             - cache has_key dotnet-cache
       prologue:
         commands:
