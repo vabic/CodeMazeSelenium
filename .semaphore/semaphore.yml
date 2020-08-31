@@ -16,9 +16,6 @@ blocks:
             - sudo snap alias dotnet-sdk.dotnet dotnet
             - dotnet restore EmployeesApp/EmployeesApp.sln
             - 'cache store '
-      prologue:
-        commands:
-          - cache restore dotnet_cache
     dependencies: []
   - name: Build project
     dependencies:
