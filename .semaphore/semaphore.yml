@@ -10,6 +10,7 @@ blocks:
       jobs:
         - name: Checkout code
           commands:
+            - dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
             - cd output/
             - dotnet vstest EmployeesApp.Tests.dll
             - dotnet vstest EmployeesApp.IntegrationTests.dll
@@ -17,7 +18,6 @@ blocks:
             - cache has_key dotnet-cache
       prologue:
         commands:
-          - cache restore
           - checkout
           - sudo snap install dotnet-sdk --classic
           - sudo snap install dotnet-runtime-31
