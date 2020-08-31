@@ -52,9 +52,12 @@ blocks:
       jobs:
         - name: 'Check docker '
           commands:
-            - cd ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp
-            - docker-compose up -d
+            - docker-compose -f $DOCKER_COMPOSE_PATH up -d
             - docker-compose ps
+            - pwd
+            - cd $PUBLISHED_PACKAGE
+            - pwd
+            - dotnet vstest EmployeesApp.AutomatedUITests.dll
       prologue:
         commands:
           - checkout
@@ -64,3 +67,8 @@ blocks:
           - sudo snap install dotnet-sdk --classic
           - sudo snap install dotnet-runtime-31
           - sudo snap alias dotnet-sdk.dotnet dotnet
+      env_vars:
+        - name: DOCKER_COMPOSE_PATH
+          value: ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/docker-compose.yml
+        - name: PUBLISHED_PACKAGE
+          value: ~/$SEMAPHORE_PROJECT_NAME/output
