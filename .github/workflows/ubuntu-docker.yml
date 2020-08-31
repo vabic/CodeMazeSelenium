@@ -1,10 +1,6 @@
 name: .NET Core Ubuntu Docker
 
-on:
-  push:
-    branches: [ui-testing-selenium]
-  pull_request:
-    branches: [ui-testing-selenium]
+on: push
 
 jobs:
   build:
@@ -15,53 +11,43 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.301
-
-      - name: Display the path
-        run: |
-          import os
-          print(os.environ['PATH'])
-        shell: python
-
-      # - name: Install dependencies
-      #   run: dotnet restore ./EmployeesApp/EmployeesApp.sln
-
-      # - name: Build
-      #   run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
-
-      # - name: Publish
-      #   run: |
-      #     dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
-      # - name: Compress output
-      #   run: tar -zcvf output.tar.gz ./output
-
-      # - name: Unit Test
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.Tests
-
-      # - name: Integrations Test
-      #   run: dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.IntegrationTests
-
-      # - name: Setup MSSql
-      #   run: |
-      #     chmod +x ./setupDB.sh
-      #     ./setupDB.sh
-      #   shell: bash
-
-      # - name: Start Server And Run Test
-      #   working-directory: ./output
-      #   run: (./EmployeesApp)&  (sleep 15 && dotnet vstest EmployeesApp.AutomatedUITests.dll)
-      #   shell: bash
+          dotnet-version: 3.1.x
 
       - name: Docker-compose
+        working-directory: EmployeesApp/EmployeesApp
         run: |
           docker-compose up -d
-          #docker-compose ps
-      - name: UITest
+          docker-compose ps
+
+      - name: Restore sln
+        run: dotnet restore EmployeesApp/EmployeesApp.sln
+
+      - name: Publish
+        run: |
+          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+
+      - name: Unit Test
+        working-directory: ./output
+        run: dotnet vstest EmployeesApp.Tests.dll
+
+      - name: Integrations Test
+        working-directory: ./output
+        run: dotnet vstest EmployeesApp.IntegrationTests.dll
+
+      - name: Check docker is running
+        working-directory: EmployeesApp/EmployeesApp
         run: |
           docker-compose ps
-          dotnet test --no-restore --verbosity normal EmployeesApp/EmployeesApp.AutomatedUITests
+
+      - name: AutomatedUITests
+        working-directory: ./output
+        run: |
+          dotnet vstest EmployeesApp.AutomatedUITests.dll
+
+      - name: Compress output
+        run: tar -zcvf output.tar.gz ./output
 
       - uses: actions/upload-artifact@v2
         with:
-          name: UbuntuSingleJob
+          name: UbuntuDocker
           path: output.tar.gz
