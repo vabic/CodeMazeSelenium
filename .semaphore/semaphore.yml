@@ -34,7 +34,6 @@ blocks:
             - dotnet --list-sdks
             - dotnet --list-runtimes
             - 'ls -al '
-            - cd output/
             - dotnet vstest EmployeesApp.Tests.dll
         - name: Integration test
           commands:
@@ -42,7 +41,6 @@ blocks:
             - dotnet --list-sdks
             - dotnet --list-runtimes
             - ls -al
-            - cd output/
             - dotnet vstest EmployeesApp.IntegrationTests.dll
       prologue:
         commands:
