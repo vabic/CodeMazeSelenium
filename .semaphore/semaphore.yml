@@ -10,12 +10,19 @@ blocks:
       jobs:
         - name: Checkout code
           commands:
-            - checkout
-            - sudo snap install dotnet-sdk --classic
-            - sudo snap install dotnet-runtime-31
-            - sudo snap alias dotnet-sdk.dotnet dotnet
-            - dotnet restore EmployeesApp/EmployeesApp.sln
-            - 'cache store '
+            - cd output/
+            - dotnet vstest EmployeesApp.Tests.dll
+            - dotnet vstest EmployeesApp.IntegrationTests.dll
+            - cache store dotnet-cache output/
+            - cache has_key dotnet-cache
+      prologue:
+        commands:
+          - checkout
+          - sudo snap install dotnet-sdk --classic
+          - sudo snap install dotnet-runtime-31
+          - sudo snap alias dotnet-sdk.dotnet dotnet
+          - dotnet restore EmployeesApp/EmployeesApp.sln
+          - dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
     dependencies: []
   - name: Build project
     dependencies:
@@ -24,9 +31,9 @@ blocks:
       jobs:
         - name: Restore
           commands:
-            - checkout
-            - dotnet restore EmployeesApp/EmployeesApp.sln
-            - dotnet publish -c Release -o output EmployeesApp/Employe
+            - dotnet --version
+            - dotnet --list-sdks
+            - 'dotnet --list-runtimes '
         - name: docker up
           commands:
             - 'cache restore '
