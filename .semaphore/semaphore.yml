@@ -44,6 +44,9 @@ blocks:
             - dotnet vstest EmployeesApp.IntegrationTests.dll
       prologue:
         commands:
+          - checkout
+          - mkdir output
+          - cd output
           - cache restore dotnet-cache
           - sudo snap install dotnet-sdk --classic
           - sudo snap install dotnet-runtime-31
