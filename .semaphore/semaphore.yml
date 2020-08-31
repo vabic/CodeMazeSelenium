@@ -30,24 +30,18 @@ blocks:
       jobs:
         - name: Unit Test
           commands:
-            - dotnet --version
-            - dotnet --list-sdks
-            - dotnet --list-runtimes
-            - 'ls -al '
+            - cache restore dotnet-cache
             - dotnet vstest EmployeesApp.Tests.dll
         - name: Integration test
           commands:
-            - dotnet --version
-            - dotnet --list-sdks
-            - dotnet --list-runtimes
-            - ls -al
+            - '# besoin du code source pour rouller'
+            - checkout
+            - mkdir output
+            - cd output
+            - cache restore dotnet-cache
             - dotnet vstest EmployeesApp.IntegrationTests.dll
       prologue:
         commands:
-          - checkout
-          - mkdir output
-          - cd output
-          - cache restore dotnet-cache
           - sudo snap install dotnet-sdk --classic
           - sudo snap install dotnet-runtime-31
           - sudo snap alias dotnet-sdk.dotnet dotnet
