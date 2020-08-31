@@ -11,10 +11,10 @@ blocks:
         - name: Checkout code
           commands:
             - dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
+            - cache store dotnet-cache ./output
             - cd output/
             - dotnet vstest EmployeesApp.Tests.dll
             - dotnet vstest EmployeesApp.IntegrationTests.dll
-            - cache store dotnet-cache ./
             - cache has_key dotnet-cache
       prologue:
         commands:
