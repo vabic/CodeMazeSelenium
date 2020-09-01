@@ -5,17 +5,13 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: setup dotnet
+  - name: Publish
     task:
       jobs:
-        - name: Checkout code
+        - name: Publish project
           commands:
             - dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
             - cache store dotnet-cache ./output
-            - cd output/
-            - dotnet vstest EmployeesApp.Tests.dll
-            - dotnet vstest EmployeesApp.IntegrationTests.dll
-            - cache has_key dotnet-cache
       prologue:
         commands:
           - checkout
@@ -23,41 +19,36 @@ blocks:
           - sudo snap install dotnet-runtime-31
           - sudo snap alias dotnet-sdk.dotnet dotnet
     dependencies: []
-  - name: Build project
+  - name: Run Tests
     dependencies:
-      - setup dotnet
+      - Publish
     task:
       jobs:
         - name: Unit Test
           commands:
-            - cache restore dotnet-cache
             - dotnet vstest EmployeesApp.Tests.dll
         - name: Integration test
           commands:
-            - '# besoin du code source pour rouller'
-            - checkout
-            - mkdir output
-            - cd output
-            - cache restore dotnet-cache
             - dotnet vstest EmployeesApp.IntegrationTests.dll
       prologue:
         commands:
+          - checkout
+          - mkdir output
+          - cd output
+          - cache restore dotnet-cache
           - sudo snap install dotnet-sdk --classic
           - sudo snap install dotnet-runtime-31
           - sudo snap alias dotnet-sdk.dotnet dotnet
-  - name: 'Block #3'
+  - name: UI Tests
     dependencies:
       - setup dotnet
     task:
       jobs:
-        - name: 'Check docker '
+        - name: Run up docker and Test
           commands:
-            - 'cd ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/ '
-            - docker-compose up -d
+            - docker-compose -f ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/docker-compose.yml run --rm start_dependencies
+            - docker-compose -f ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/docker-compose.yml up -d
             - docker-compose ps
-            - cd ~/$SEMAPHORE_PROJECT_NAME/output
-            - pwd
-            - sleep 10
             - dotnet vstest EmployeesApp.AutomatedUITests.dll
       prologue:
         commands:
