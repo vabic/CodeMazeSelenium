@@ -18,7 +18,7 @@ jobs:
       
       - name: Publish
         run: |
-        dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
+          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
       
       - name: Unit Test
         working-directory: ./output
