@@ -15,10 +15,9 @@ blocks:
       prologue:
         commands:
           - checkout
-          - '           checkout'
-          - '          sudo snap install dotnet-sdk --classic'
-          - '          sudo snap install dotnet-runtime-31'
-          - '          -sudo snap alias dotnet-sdk.dotnet dotnet'
+          - sudo snap install dotnet-sdk --classic
+          - sudo snap install dotnet-runtime-31
+          - sudo snap alias dotnet-sdk.dotnet dotnet
     dependencies: []
   - name: Run Tests
     dependencies:
