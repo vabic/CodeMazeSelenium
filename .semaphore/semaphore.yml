@@ -75,4 +75,4 @@ blocks:
         - name: Artifact
           commands:
             - tar -zcvf output.tar.gz ./output
-            - artifact push project output.tar.gz.tar
+            - artifact push project output.tar.gz
