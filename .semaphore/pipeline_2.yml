@@ -1,0 +1,24 @@
+version: v1.0
+name: Pipeline 2
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 'Block #1'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - echo "job 1"
+            - checkout
+            - dotnet publish -c Release -o App EmployeesApp/EmployeesApp.sln
+            - echo $SEMAPHORE_GIT_TAG_NAME
+            - echo $SEMAPHORE_GIT_BRANCH
+            - APP_NAME=myApp-$SEMAPHORE_GIT_TAG_NAME-$SEMAPHORE_GIT_BRANCH
+            - echo $APP_NAME
+            - tar -zcvf myApp-$SEMAPHORE_GIT_TAG_NAME-$SEMAPHORE_GIT_BRANCH ./output
+            - artefact push project $APP_NAME
+      env_vars:
+        - name: FOO_1
+          value: BAR_1

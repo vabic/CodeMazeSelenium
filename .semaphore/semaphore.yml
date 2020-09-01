@@ -4,6 +4,9 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+fail_fast:
+  stop:
+    when: 'true'
 blocks:
   - name: Publish
     task:
@@ -12,13 +15,9 @@ blocks:
           commands:
             - dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
             - cache store dotnet-cache ./output
-            - echo "Allo les amis"
       prologue:
         commands:
           - checkout
-          - sudo snap install dotnet-sdk --classic
-          - sudo snap install dotnet-runtime-31
-          - sudo snap alias dotnet-sdk.dotnet dotnet
     dependencies: []
   - name: Run Tests
     dependencies:
@@ -77,3 +76,8 @@ blocks:
           commands:
             - tar -zcvf output.tar.gz ./output
             - artifact push project output.tar.gz
+promotions:
+  - name: Deploy With Tag
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: ("branch =~ '.*' OR tag =~ '.*') AND result = 'passed'
