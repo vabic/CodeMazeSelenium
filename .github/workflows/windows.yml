@@ -1,10 +1,14 @@
-name: Ubuntu_Docker
+name: .NET Core Windows
 
-on: push
+on:
+  push:
+    branches: [ui-testing-selenium, work]
+  pull_request:
+    branches: [ui-testing-selenium, work]
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
 
@@ -12,18 +16,21 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-          
-      - name: Restore sln
-        run: dotnet restore EmployeesApp/EmployeesApp.sln
-      
+
+      - name: Install dependencies
+        run: dotnet restore ./EmployeesApp/EmployeesApp.sln
+
+      - name: Build
+        run: dotnet build ./EmployeesApp/EmployeesApp.sln --configuration Release --no-restore
+
       - name: Publish
         run: |
-        dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
-      
+          dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln --no-restore
+
       - name: Unit Test
         working-directory: ./output
         run: dotnet vstest EmployeesApp.Tests.dll
-      
+
       - name: Integrations Test
         working-directory: ./output
         run: dotnet vstest EmployeesApp.IntegrationTests.dll
@@ -43,7 +50,8 @@ jobs:
       - name: Compress output
         run: tar -zcvf output.tar.gz ./output
 
-      - uses: actions/upload-artifact@v2
+      - name: uploading...
+        uses: actions/upload-artifact@v2
         with:
-          name: UbuntuDocker
+          name: windows
           path: output.tar.gz
