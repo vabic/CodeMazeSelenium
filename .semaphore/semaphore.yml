@@ -41,7 +41,7 @@ blocks:
           - sudo snap alias dotnet-sdk.dotnet dotnet
   - name: UI Tests
     dependencies:
-      - setup dotnet
+      - Publish
     task:
       jobs:
         - name: Run up docker and Test
