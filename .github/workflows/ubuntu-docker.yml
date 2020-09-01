@@ -16,7 +16,8 @@ jobs:
       - name: Docker-compose
         working-directory: EmployeesApp/EmployeesApp
         run: |
-          docker-compose up -d
+          docker-compose run --rm start_dependencies
+          docker-compose up -d --remove-orphans  web
           docker-compose ps
 
       - name: Restore sln
