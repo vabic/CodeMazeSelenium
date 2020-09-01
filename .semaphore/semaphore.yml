@@ -60,3 +60,19 @@ blocks:
           - sudo snap install dotnet-runtime-31
           - sudo snap alias dotnet-sdk.dotnet dotnet
       env_vars: []
+  - name: 'Block #4'
+    dependencies:
+      - Run Tests
+      - UI Tests
+    task:
+      prologue:
+        commands:
+          - mkdir output
+          - cd output
+          - cache restore dotnet-cache
+          - cd ../
+      jobs:
+        - name: Artifact
+          commands:
+            - tar -zcvf output.tar.gz ./output
+            - artifact push project output.tar.gz.tar
