@@ -15,7 +15,7 @@ blocks:
             - echo $SEMAPHORE_GIT_BRANCH
             - 'APP_NAME=myApp-${SEMAPHORE_GIT_TAG_NAME}-$SEMAPHORE_GIT_BRANCH'
             - echo $APP_NAME
-            - tar -zcvf $APP_NAME ./output
+            - tar -zcvf $APP_NAME ./App
             - artefact push project $APP_NAME --force
       env_vars:
         - name: FOO_1
