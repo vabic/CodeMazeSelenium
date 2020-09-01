@@ -1,5 +1,13 @@
 version: "3"
 services:
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    environment:
+      - SLEEP_LENGTH=1
+      - TIMEOUT_LENGTH=10
+    depends_on:
+      - db
+    command: db:1433
   web:
     build:
       context: .
