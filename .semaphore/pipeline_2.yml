@@ -13,7 +13,7 @@ blocks:
             - dotnet publish -c Release -o App EmployeesApp/EmployeesApp.sln
             - echo $SEMAPHORE_GIT_TAG_NAME
             - echo $SEMAPHORE_GIT_BRANCH
-            - APP_NAME=myApp-${SEMAPHORE_GIT_SHA::6}-$SEMAPHORE_GIT_BRANCH
+            - 'APP_NAME=myApp-${SEMAPHORE_GIT_TAG_NAME}-$SEMAPHORE_GIT_BRANCH'
             - echo $APP_NAME
             - tar -zcvf $APP_NAME ./output
             - artefact push project $APP_NAME --force
