@@ -9,10 +9,9 @@ This repo contains the source code for the fifth article of the "ASP.NET Core MV
 | BUILD       |
 | :---------- |
 | SemaphoreCI |
-
 | [![Build Status](https://vabic.semaphoreci.com/badges/CodeMazeSelenium/branches/work.svg?key=1db44441-6274-44b9-8df1-7767d407e5e1)](https://vabic.semaphoreci.com/projects/CodeMazeSelenium?key=1db44441-6274-44b9-8df1-7767d407e5e1)
 
-| BUILD                                                                                                                                                           |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| GitHubActions                                                                                                                                                   |
-| ![Build Status](https://github.com/vabic/CodeMazeSelenium/workflows/.github/workflows/ubuntu_docker.yml/badge.svg)
+| BUILD |
+|:----- |
+|GitHubActions|
+| [![Build Status](https://github.com/vabic/CodeMazeSelenium/workflows/.github/workflows/ubuntu-docker.yml/badge.svg)](https://github.com/vabic/CodeMazeSelenium/actions) |
