@@ -15,4 +15,4 @@ This repo contains the source code for the fifth article of the "ASP.NET Core MV
 | BUILD                                                                                                                                                           |
 | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | GitHubActions                                                                                                                                                   |
-| [![Build Status](https://github.com/actions/CodeMazeSelenium/workflows/Ubuntu_Docker/badge.svg?branch=work)](https://github.com/vabic/CodeMazeSelenium/actions) |
+| [![Build Status](https://github.com/vabic/CodeMazeSelenium/workflows/Ubuntu_Docker/badge.svg)]
