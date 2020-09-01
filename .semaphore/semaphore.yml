@@ -75,7 +75,7 @@ blocks:
         - name: Artifact
           commands:
             - 'ARTEFACT_NAME=output-${SEMAPHORE_GIT_SHA::5}'
-            - tar -zcvf output-$ARTEFACT_NAME ./output
+            - tar -zcvf $ARTEFACT_NAME ./output
             - artifact push project $ARTEFACT_NAME
 promotions:
   - name: Deploy With Tag
