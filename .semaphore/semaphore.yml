@@ -12,6 +12,7 @@ blocks:
           commands:
             - dotnet publish -c Release -o output EmployeesApp/EmployeesApp.sln
             - cache store dotnet-cache ./output
+            - echo "Allo les amis"
       prologue:
         commands:
           - checkout
