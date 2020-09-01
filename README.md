@@ -1,5 +1,4 @@
-
-# automatic-ui-testing-selenium-mvc 
+# automatic-ui-testing-selenium-mvc
 
 ## [https://code-maze.com/automatic-ui-testing-selenium-asp-net-core-mvc/]
 
@@ -7,12 +6,13 @@ This repo contains the source code for the fifth article of the "ASP.NET Core MV
 
 ### CI/CD statuses
 
-| BUILD |
-|:----- |
-|SemaphoreCI|
-| ![Build Status](https://vabic.semaphoreci.com/badges/CodeMazeSelenium/branches/work.svg?key=1db44441-6274-44b9-8df1-7767d407e5e1)
+| BUILD       |
+| :---------- |
+| SemaphoreCI |
 
-| BUILD |
-|:----- |
-|GitHubActions|
-| ![Build Status](https://github.com/actions/CodeMazeSelenium/workflows/Ubuntu_Docker/badge.svg?branch=work)
+| [![Build Status](https://vabic.semaphoreci.com/badges/CodeMazeSelenium/branches/work.svg?key=1db44441-6274-44b9-8df1-7767d407e5e1)](https://vabic.semaphoreci.com/projects/CodeMazeSelenium?key=1db44441-6274-44b9-8df1-7767d407e5e1)
+
+| BUILD                                                                                                                                                           |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GitHubActions                                                                                                                                                   |
+| [![Build Status](https://github.com/actions/CodeMazeSelenium/workflows/Ubuntu_Docker/badge.svg?branch=work)](https://github.com/vabic/CodeMazeSelenium/actions) |
