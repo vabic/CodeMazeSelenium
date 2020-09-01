@@ -76,7 +76,7 @@ blocks:
           commands:
             - 'ARTEFACT_NAME=output-${SEMAPHORE_GIT_SHA::5}'
             - tar -zcvf $ARTEFACT_NAME ./output
-            - artifact push project $ARTEFACT_NAME
+            - artifact push project $ARTEFACT_NAME --force
 promotions:
   - name: Deploy With Tag
     pipeline_file: pipeline_2.yml
