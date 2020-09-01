@@ -1,13 +1,15 @@
+#CI/CD statuses
+
 | BUILD |
 |:----- |
 |SemaphoreCI|
-| [![Build Status](https://vabic.semaphoreci.com/badges/CodeMazeSelenium.svg?key=1db44441-6274-44b9-8df1-7767d407e5e1)](https://vabic.semaphoreci.com/badges/CodeMazeSelenium/branches/work.svg) |
+| ![Build Status](https://vabic.semaphoreci.com/badges/CodeMazeSelenium/branches/work.svg?key=1db44441-6274-44b9-8df1-7767d407e5e1)
 
 | BUILD |
 |:----- |
 |GitHubActions|
-| [![Build Status](https://github.com/actions/CodeMazeSelenium/workflows/.github/workflows/ubuntu-docker.yml/badge.svg?branch=work)]
-(https://github.com/vabic/CodeMazeSelenium/actions) |
+| [![Build Status](https://github.com/actions/CodeMazeSelenium/workflows/.NET%20Core%20Ubuntu%20Docker/badge.svg?branch=work)]
+
 
 
 # automatic-ui-testing-selenium-mvc
