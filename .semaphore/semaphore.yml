@@ -74,8 +74,9 @@ blocks:
       jobs:
         - name: Artifact
           commands:
-            - 'tar -zcvf output-${SEMAPHORE_GIT_SHA::5} ./output'
-            - artifact push project output.tar.gz
+            - 'ARTEFACT_NAME=output-${SEMAPHORE_GIT_SHA::5}'
+            - tar -zcvf output-$ARTEFACT_NAME ./output
+            - artifact push project $ARTEFACT_NAME
 promotions:
   - name: Deploy With Tag
     pipeline_file: pipeline_2.yml
