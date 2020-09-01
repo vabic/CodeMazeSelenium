@@ -30,18 +30,35 @@ blocks:
       jobs:
         - name: Unit Test
           commands:
-            - dotnet --version
-            - dotnet --list-sdks
-            - dotnet --list-runtimes
-            - 'ls -al '
+            - cache restore dotnet-cache
             - dotnet vstest EmployeesApp.Tests.dll
         - name: Integration test
           commands:
-            - dotnet --version
-            - dotnet --list-sdks
-            - dotnet --list-runtimes
-            - ls -al
+            - '# besoin du code source pour rouller'
+            - checkout
+            - mkdir output
+            - cd output
+            - cache restore dotnet-cache
             - dotnet vstest EmployeesApp.IntegrationTests.dll
+      prologue:
+        commands:
+          - sudo snap install dotnet-sdk --classic
+          - sudo snap install dotnet-runtime-31
+          - sudo snap alias dotnet-sdk.dotnet dotnet
+  - name: 'Block #3'
+    dependencies:
+      - setup dotnet
+    task:
+      jobs:
+        - name: 'Check docker '
+          commands:
+            - 'cd ~/$SEMAPHORE_PROJECT_NAME/EmployeesApp/EmployeesApp/ '
+            - docker-compose up -d
+            - docker-compose ps
+            - cd ~/$SEMAPHORE_PROJECT_NAME/output
+            - pwd
+            - sleep 10
+            - dotnet vstest EmployeesApp.AutomatedUITests.dll
       prologue:
         commands:
           - checkout
@@ -51,19 +68,4 @@ blocks:
           - sudo snap install dotnet-sdk --classic
           - sudo snap install dotnet-runtime-31
           - sudo snap alias dotnet-sdk.dotnet dotnet
-  - name: 'Block #3'
-    dependencies:
-      - Build project
-    task:
-      jobs:
-        - name: 'Job #1'
-          commands:
-            - cd output
-            - dotnet vstest EmployeesApp.Tests.dll
-        - name: 'Job #2'
-          commands:
-            - dotnet vstest EmployeesApp.IntegrationTests.dll
-        - name: 'Check docker '
-          commands:
-            - cd EmployeesApp/EmployeesApp
-            - docker-compose ps
+      env_vars: []
