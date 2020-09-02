@@ -5,18 +5,18 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: Deploying
     task:
       jobs:
-        - name: 'Job #1'
+        - name: Deploy To Semaphore
           commands:
             - dotnet publish -c Release -o App EmployeesApp/EmployeesApp.sln
             - echo $SEMAPHORE_GIT_TAG_NAME
             - echo $SEMAPHORE_GIT_BRANCH
-            - 'APP_NAME=myApp-${SEMAPHORE_GIT_TAG_NAME}-$SEMAPHORE_GIT_BRANCH'
+            - 'APP_NAME=APP_NAME=myApp-${SEMAPHORE_GIT_SHA::7}-${SEMAPHORE_GIT_TAG_NAME}'
             - echo $APP_NAME
             - tar -zcvf $APP_NAME ./App
-            - artefact push project $APP_NAME --force
+            - artefact push project $APP_NAME
       env_vars:
         - name: FOO_1
           value: BAR_1
