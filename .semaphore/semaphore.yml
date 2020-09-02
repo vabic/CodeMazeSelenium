@@ -60,7 +60,7 @@ blocks:
           - sudo snap install dotnet-runtime-31
           - sudo snap alias dotnet-sdk.dotnet dotnet
       env_vars: []
-  - name: 'Block #4'
+  - name: Deploying
     dependencies:
       - Run Tests
       - UI Tests
@@ -81,4 +81,4 @@ promotions:
   - name: Deploy With Tag
     pipeline_file: pipeline_2.yml
     auto_promote:
-      when: "tag =~ '.*' and result = 'passed'"
+      when: tag =~ '.*' and result = 'passed'
