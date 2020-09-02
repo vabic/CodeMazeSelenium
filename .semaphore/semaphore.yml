@@ -1,5 +1,5 @@
 version: v1.0
-name: Initial Pipeline
+name: Build and Test Pipeline
 agent:
   machine:
     type: e1-standard-2
@@ -79,6 +79,6 @@ blocks:
             - artifact push project $ARTEFACT_NAME --force
 promotions:
   - name: Deploy With Tag
-    pipeline_file: pipeline_2.yml
+    pipeline_file: deploy.yml
     auto_promote:
       when: "tag =~ '.*' and result = 'passed'"
