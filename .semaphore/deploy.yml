@@ -16,7 +16,7 @@ blocks:
             - 'APP_NAME=myApp-${SEMAPHORE_GIT_SHA::7}-${SEMAPHORE_GIT_TAG_NAME}-candidate'
             - echo $APP_NAME
             - tar -zcvf $APP_NAME ./App
-            - artefact push project $APP_NAME
+            - artifact push project $APP_NAME
       env_vars:
         - name: FOO_1
           value: BAR_1
