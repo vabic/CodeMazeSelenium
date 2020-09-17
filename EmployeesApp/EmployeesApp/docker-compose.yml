@@ -8,14 +8,16 @@ services:
       - "8080:5050"
     depends_on:
       - db
+    healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:8080"]
+     interval: 30s
+     timeout: 50s
+     retries: 10
+     start_period: 30s
+     
+     
   db:
     image: "mcr.microsoft.com/mssql/server"
     environment:
       SA_PASSWORD: "P@ssw0rd!"
       ACCEPT_EULA: "Y"
-    healthcheck:
-     test: ["CMD", "curl", "-f", "http://localhost:8080"]
-     interval: 10s
-     timeout: 3m
-     retries: 10
-     start_period: 15s
