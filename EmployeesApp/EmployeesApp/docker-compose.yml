@@ -1,13 +1,5 @@
 version: "3"
 services:
-  start_dependencies:
-    image: dadarek/wait-for-dependencies
-    environment:
-      - SLEEP_LENGTH=1
-      - TIMEOUT_LENGTH=10
-    depends_on:
-      - db
-    command: db:1433
   web:
     build:
       context: .
@@ -21,3 +13,9 @@ services:
     environment:
       SA_PASSWORD: "P@ssw0rd!"
       ACCEPT_EULA: "Y"
+    healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:8080"]
+     interval: 10s
+     timeout: 3m
+     retries: 10
+     start_period: 15s
