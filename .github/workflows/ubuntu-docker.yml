@@ -28,16 +28,10 @@ jobs:
         working-directory: ./output
         run: dotnet vstest EmployeesApp.IntegrationTests.dll
 
-      - name: Docker-compose
-        working-directory: EmployeesApp/EmployeesApp
-        run: |
-          docker-compose run --rm start_dependencies
-          docker-compose up -d --remove-orphans  web
-          docker-compose ps
-
       - name: AutomatedUITests
         working-directory: ./output
         run: |
+          docker-compose ps
           dotnet vstest EmployeesApp.AutomatedUITests.dll
 
       - name: Compress output
